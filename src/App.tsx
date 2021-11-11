@@ -1,5 +1,11 @@
+import { Router, Navbar } from "./features/auth/";
 function App() {
-  return <>hey</>;
+  return (
+    <>
+      <Navbar />
+      <Router />
+    </>
+  );
 }
 
 export default App;

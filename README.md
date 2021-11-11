@@ -2,5 +2,5 @@
 
 - React + TS
 - Redux Toolkit
-- ViteJS
 - ChakraUI
+- ViteJS
