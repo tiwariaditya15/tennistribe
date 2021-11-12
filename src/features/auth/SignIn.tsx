@@ -8,8 +8,10 @@ import {
   Input,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import { useFormik } from "formik";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { signIn } from "./authSlice";
 import * as yup from "yup";
 
 type InitialValues = {
@@ -23,6 +25,9 @@ const initialValues: InitialValues = {
 
 export function SignIn(): JSX.Element {
   const [hidden, setHidden] = useState(true);
+  const dispatch = useAppDispatch();
+  const logged = useAppSelector((state) => state.auth.logged);
+  const authError = useAppSelector((state) => state.auth.error);
   const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
   const formik = useFormik({
     initialValues,
@@ -31,9 +36,12 @@ export function SignIn(): JSX.Element {
       password: yup.string().required("Enter password"),
     }),
     onSubmit: (values) => {
-      console.log({ values });
+      dispatch(signIn(values));
     },
   });
+  if (logged) {
+    return <Navigate to="/" replace={true} />;
+  }
   return (
     <Flex
       flexDirection={"column"}
@@ -104,8 +112,10 @@ export function SignIn(): JSX.Element {
           Fill Credentials
         </Button>
       </Box>
-
-      <Box mt="1rem">
+      <Box mt="0.5rem">
+        <Text color="red.400">{authError && authError}</Text>
+      </Box>
+      <Box mt="0.8rem">
         <Text color="twitter.400">
           <span style={{ color: "black" }}>Don't have an account?</span>
           &nbsp;&nbsp;

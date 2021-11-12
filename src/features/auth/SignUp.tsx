@@ -8,9 +8,11 @@ import {
   Input,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { signUp } from "./authSlice";
 
 type InitialValues = {
   name: string;
@@ -26,8 +28,10 @@ const initialValues: InitialValues = {
 };
 
 export function SignUp(): JSX.Element {
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
+  const dispatch = useAppDispatch();
+  const logged = useAppSelector((state) => state.auth.logged);
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
@@ -38,8 +42,12 @@ export function SignUp(): JSX.Element {
     }),
     onSubmit: (values) => {
       console.log({ values });
+      dispatch(signUp(values));
     },
   });
+  if (logged) {
+    return <Navigate to="/" replace={true} />;
+  }
   return (
     <Flex
       flexDirection={"column"}
@@ -58,6 +66,9 @@ export function SignUp(): JSX.Element {
             placeholder="Name"
             {...formik.getFieldProps("name")}
           />
+          <Text color="red.400">
+            {formik.touched.name && formik.errors.name && formik.errors.name}
+          </Text>
         </FormControl>
       </Box>
       <Box mt="0.6rem">
@@ -68,6 +79,9 @@ export function SignUp(): JSX.Element {
             placeholder="Email"
             {...formik.getFieldProps("email")}
           />
+          <Text color="red.400">
+            {formik.touched.email && formik.errors.email && formik.errors.email}
+          </Text>
         </FormControl>
       </Box>
       <Box mt="0.6rem">
@@ -78,6 +92,11 @@ export function SignUp(): JSX.Element {
             placeholder="Username"
             {...formik.getFieldProps("username")}
           />
+          <Text color="red.400">
+            {formik.touched.username &&
+              formik.errors.username &&
+              formik.errors.username}
+          </Text>
         </FormControl>
       </Box>
       <Box mt="0.6rem">
@@ -89,6 +108,11 @@ export function SignUp(): JSX.Element {
               placeholder="Password"
               {...formik.getFieldProps("password")}
             />
+            <Text color="red.400">
+              {formik.touched.password &&
+                formik.errors.password &&
+                formik.errors.password}
+            </Text>
           </FormControl>
           <Box
             color={"gray.500"}
@@ -105,7 +129,11 @@ export function SignUp(): JSX.Element {
         </Box>
       </Box>
       <Box>
-        <Button colorScheme={"twitter"} mt="1rem">
+        <Button
+          colorScheme={"twitter"}
+          mt="1rem"
+          onClick={() => formik.handleSubmit()}
+        >
           SignUp
         </Button>
       </Box>
