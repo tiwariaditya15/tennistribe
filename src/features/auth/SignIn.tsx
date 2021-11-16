@@ -7,6 +7,7 @@ import {
   Text,
   Input,
   useBreakpointValue,
+  Spinner,
 } from "@chakra-ui/react";
 import { Navigate, NavLink } from "react-router-dom";
 import { useFormik } from "formik";
@@ -24,7 +25,8 @@ const initialValues: InitialValues = {
 };
 
 export function SignIn(): JSX.Element {
-  const [hidden, setHidden] = useState(true);
+  const [hidden, setHidden] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const logged = useAppSelector((state) => state.auth.logged);
   const authError = useAppSelector((state) => state.auth.error);
@@ -36,7 +38,10 @@ export function SignIn(): JSX.Element {
       password: yup.string().required("Enter password"),
     }),
     onSubmit: (values) => {
-      dispatch(signIn(values));
+      setLoading(true);
+      dispatch(signIn(values)).then(() => {
+        setLoading(false);
+      });
     },
   });
   if (logged) {
@@ -98,7 +103,7 @@ export function SignIn(): JSX.Element {
           mt="1rem"
           onClick={() => formik.handleSubmit()}
         >
-          SignIn
+          {isLoading ? <Spinner /> : "SignIn"}
         </Button>
       </Box>
       <Box>
