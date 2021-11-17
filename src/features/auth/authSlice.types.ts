@@ -1,7 +1,8 @@
+import { TUser } from "../../app/services/auth";
 export type TAuthState = {
   logged: boolean;
   token: string | null;
-  currentUser: string | null;
+  currentUser: TUser | null;
   error: string | null | undefined;
 };
 

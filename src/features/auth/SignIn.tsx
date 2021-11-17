@@ -12,8 +12,9 @@ import {
 import { Navigate, NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { signIn } from "./authSlice";
+import { useLoginMutation } from "../../app/services/auth";
 import * as yup from "yup";
+import { setError } from "./authSlice";
 
 type InitialValues = {
   username: string;
@@ -26,22 +27,26 @@ const initialValues: InitialValues = {
 
 export function SignIn(): JSX.Element {
   const [hidden, setHidden] = useState<boolean>(true);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
+
+  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
   const logged = useAppSelector((state) => state.auth.logged);
   const authError = useAppSelector((state) => state.auth.error);
-  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
+  const dispatch = useAppDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
+
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
       username: yup.string().required("Enter username"),
       password: yup.string().required("Enter password"),
     }),
-    onSubmit: (values) => {
-      setLoading(true);
-      dispatch(signIn(values)).then(() => {
-        setLoading(false);
-      });
+    onSubmit: async (values) => {
+      try {
+        await login(values).unwrap();
+      } catch (error: any) {
+        dispatch(setError(error.data.error));
+      }
     },
   });
   if (logged) {

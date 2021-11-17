@@ -7,12 +7,14 @@ import {
   Text,
   Input,
   useBreakpointValue,
+  Spinner,
 } from "@chakra-ui/react";
 import { Navigate, NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useSignupMutation } from "../../app/services/auth";
+import { setError } from "./authSlice";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { signUp } from "./authSlice";
 
 type InitialValues = {
   name: string;
@@ -29,9 +31,12 @@ const initialValues: InitialValues = {
 
 export function SignUp(): JSX.Element {
   const [hidden, setHidden] = useState(true);
-  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
+
   const dispatch = useAppDispatch();
+  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
   const logged = useAppSelector((state) => state.auth.logged);
+  const [signup, { isLoading }] = useSignupMutation();
+
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
@@ -40,9 +45,12 @@ export function SignUp(): JSX.Element {
       username: yup.string().required("Enter username"),
       password: yup.string().required("Enter password"),
     }),
-    onSubmit: (values) => {
-      console.log({ values });
-      dispatch(signUp(values));
+    onSubmit: async (values) => {
+      try {
+        await signup(values).unwrap();
+      } catch (error: any) {
+        dispatch(error.data.error);
+      }
     },
   });
   if (logged) {
@@ -134,7 +142,7 @@ export function SignUp(): JSX.Element {
           mt="1rem"
           onClick={() => formik.handleSubmit()}
         >
-          SignUp
+          {isLoading ? <Spinner /> : "SignUp"}
         </Button>
       </Box>
       <Box mt="1rem">
