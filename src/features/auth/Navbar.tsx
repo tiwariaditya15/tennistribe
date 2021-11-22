@@ -26,6 +26,8 @@ export function Navbar(): JSX.Element {
       color={"twitter.400"}
       fontSize={"1.6rem"}
       p={"1rem"}
+      border="1px"
+      borderColor={"gray.100"}
     >
       <Text fontWeight={"600"}>
         <NavLink to="/">TennisTribe</NavLink>

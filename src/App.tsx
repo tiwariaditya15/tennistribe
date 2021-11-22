@@ -1,4 +1,5 @@
 import { Router, Navbar } from "./features/auth/";
+
 function App() {
   return (
     <>

@@ -1,24 +1,24 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
-export type TUser = {
+export type User = {
   name: string;
   username: string;
   email: string;
   joined: string;
 };
 
-type TUserResponse = {
+type UserResponse = {
   user: TUser;
   token: string;
 };
 
-type TLoginRequest = {
+type LoginRequest = {
   username: string;
   password: string;
 };
 
-type TSignResponse = {
+type SignResponse = {
   name: string;
   username: string;
   email: string;

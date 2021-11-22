@@ -3,8 +3,8 @@ import { baseURL } from "./baseURL";
 
 const URL = `${baseURL}/accounts`;
 
-type TServerResponse = { token: string };
-type TSignUpBody = {
+type ServerResponse = { token: string };
+type SignUpBody = {
   name: string;
   email: string;
   username: string;

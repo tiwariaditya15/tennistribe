@@ -1,25 +1,25 @@
 import { TUser } from "../../app/services/auth";
-export type TAuthState = {
+export type AuthState = {
   logged: boolean;
   token: string | null;
   currentUser: TUser | null;
   error: string | null | undefined;
 };
 
-export type TSignIn = {
+export type SignIn = {
   username: string;
   password: string;
 };
 
-export type TServerError = {
+export type ServerError = {
   error: string;
 };
 
-export type TServerResponse = {
+export type ServerResponse = {
   token: string;
 };
 
-export type TSignUpBody = {
+export type SignUpBody = {
   name: string;
   email: string;
   username: string;
