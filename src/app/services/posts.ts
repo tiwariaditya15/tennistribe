@@ -1,13 +1,20 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
+type Author = {
+  name: string;
+  username: string;
+  email: string;
+};
+
 export type Post = {
   id: string;
   content: string;
   reactions: number;
-  authorId: string;
   timestamp: string;
   media?: string;
+  author: Author;
+  comments: any;
 };
 
 type PostsReponse = {
