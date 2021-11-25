@@ -3,6 +3,7 @@ import { Post } from "./Post";
 import { Post as PostType } from "../../services/posts";
 import { useAppSelector } from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type PostsProps = {
   posts?: PostType[];
@@ -11,6 +12,7 @@ type PostsProps = {
 export function Posts({ posts }: PostsProps): JSX.Element {
   const navigate = useNavigate();
   const logged = useAppSelector((state) => state.auth.logged);
+  const [commenting, setCommenting] = useState<string>("");
   const loginButton = !logged ? (
     <Box>
       <Text onClick={() => navigate("/signin")}>Login to explore</Text>
@@ -30,7 +32,11 @@ export function Posts({ posts }: PostsProps): JSX.Element {
   return (
     <>
       {posts.map((post) => (
-        <Post post={post} />
+        <Post
+          post={post}
+          commenting={commenting}
+          setCommenting={setCommenting}
+        />
       ))}
     </>
   );

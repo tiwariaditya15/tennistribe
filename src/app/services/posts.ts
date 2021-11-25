@@ -57,6 +57,7 @@ export const postsApi = createApi({
       }),
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
+    // addComment: builder.mutation
   }),
 });
 
