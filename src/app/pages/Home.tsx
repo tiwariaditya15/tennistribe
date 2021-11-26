@@ -1,8 +1,9 @@
-import { Grid, GridItem, Box, useMediaQuery } from "@chakra-ui/react";
+import { Grid, GridItem, Flex, useMediaQuery, Spinner } from "@chakra-ui/react";
 import { Posts } from "../components/Posts";
 import { CreatePost } from "../../features/posts";
 import { useAppSelector } from "../hooks";
 import { useGetPostsQuery } from "../services/posts";
+import { SideNav } from "../../features/auth/SideNav";
 
 export function Home(): JSX.Element {
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
@@ -12,7 +13,9 @@ export function Home(): JSX.Element {
 
   return (
     <Grid templateColumns={"repeat(4, 1fr)"}>
-      <GridItem></GridItem>
+      <GridItem mx={"auto"}>
+        <SideNav />
+      </GridItem>
       <GridItem
         colSpan={isSmallerThan748 ? 3 : 2}
         borderLeft="1px"
@@ -21,7 +24,13 @@ export function Home(): JSX.Element {
         height={"100%"}
       >
         {logged ? <CreatePost /> : null}
-        <Posts posts={data?.posts} />
+        {isLoading ? (
+          <Flex justify="center" mt="1rem">
+            <Spinner />
+          </Flex>
+        ) : (
+          <Posts posts={data?.posts} />
+        )}
       </GridItem>
       {thirdColumn}
     </Grid>

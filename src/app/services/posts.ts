@@ -2,9 +2,17 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
 type Author = {
+  id?: string;
   name: string;
   username: string;
   email: string;
+};
+
+export type Comment = {
+  id: string;
+  comment: string;
+  author: Author;
+  post: Post;
 };
 
 export type Post = {
@@ -14,11 +22,18 @@ export type Post = {
   timestamp: string;
   media?: string;
   author: Author;
-  comments: any;
+  comments: Comment[];
 };
 
 type PostsReponse = {
   posts: Post[];
+};
+
+type CommentResponse = {
+  id: string;
+  comment: string;
+  postId: string;
+  authorId: string;
 };
 
 const baseQuery = fetchBaseQuery({
@@ -57,8 +72,16 @@ export const postsApi = createApi({
       }),
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
-    // addComment: builder.mutation
+    addComment: builder.mutation<CommentResponse, Partial<CommentResponse>>({
+      query: (body) => ({
+        url: "comments",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: "Posts", id }],
+    }),
   }),
 });
 
-export const { useAddPostMutation, useGetPostsQuery } = postsApi;
+export const { useAddPostMutation, useGetPostsQuery, useAddCommentMutation } =
+  postsApi;

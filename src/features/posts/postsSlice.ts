@@ -20,4 +20,8 @@ const postSlice = createSlice({
   },
 });
 
+export const { selectById: selectPostById } = postsAdapter.getSelectors(
+  (state: RootState) => state.posts
+);
+
 export default postSlice.reducer;

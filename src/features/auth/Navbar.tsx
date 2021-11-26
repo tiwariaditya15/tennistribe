@@ -32,7 +32,6 @@ export function Navbar(): JSX.Element {
       <Text fontWeight={"600"}>
         <NavLink to="/">TennisTribe</NavLink>
       </Text>
-      {signIn}
     </Flex>
   );
 }

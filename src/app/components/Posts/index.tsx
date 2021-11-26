@@ -13,20 +13,11 @@ export function Posts({ posts }: PostsProps): JSX.Element {
   const navigate = useNavigate();
   const logged = useAppSelector((state) => state.auth.logged);
   const [commenting, setCommenting] = useState<string>("");
-  const loginButton = !logged ? (
-    <Box>
-      <Text onClick={() => navigate("/signin")}>Login to explore</Text>
-    </Box>
-  ) : null;
+
   if (!posts)
     return (
       <Flex justify={"center"} mt={"1rem"} color={"gray.600"}>
-        <Text>
-          No posts!
-          <br />
-        </Text>
-
-        {loginButton}
+        <Text>No posts!</Text>
       </Flex>
     );
   return (

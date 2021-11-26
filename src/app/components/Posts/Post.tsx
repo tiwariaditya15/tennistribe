@@ -4,8 +4,9 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import moment from "moment";
 import { useAppSelector } from "../../hooks";
-import { PostComment } from "../Comment/PostComment";
+import { PostComment } from "../../../features/posts/PostComment";
 import { useToggle } from "../../hooks/useToggle";
+import { useNavigate } from "react-router-dom";
 
 type PostProps = {
   post: PostType;
@@ -18,6 +19,7 @@ export function Post({
   commenting,
   setCommenting,
 }: PostProps): JSX.Element {
+  const navigate = useNavigate();
   const { setToggle, toggle } = useToggle();
   const currentUser = useAppSelector((state) => state.auth.currentUser?.email);
   const isAuthor = currentUser === post.author.email ? true : false;
@@ -30,6 +32,8 @@ export function Post({
         borderColor={"gray.100"}
         px={"0.4rem"}
         py="0.4rem"
+        onClick={() => navigate(`/post/${post.id}`)}
+        cursor={"pointer"}
       >
         {/* card-header */}
         <Flex justify={"flex-start"}>
@@ -47,24 +51,42 @@ export function Post({
         <Flex py="0.5rem" color={"gray.600"}>
           {post.content}
         </Flex>
-        <Flex py={"0.5rem"} fontSize={"1.5rem"}>
+        {/* card-actions */}
+        <Flex
+          py={"0.5rem"}
+          fontSize={"1.5rem"}
+          pl={"0.4rem"}
+          alignItems={"center"}
+        >
           <Box color={"red.500"} cursor={"pointer"}>
             {isAuthor ? <AiFillHeart /> : <AiOutlineHeart />}
           </Box>
-          <Box
-            pl="1rem"
-            cursor={"pointer"}
-            color={"gray.500"}
-            onClick={() => {
-              setToggle((curToggle) => !curToggle);
-              setCommenting(post.id);
-            }}
-          >
-            <BiCommentDetail />
-          </Box>
+          <Flex alignItems={"center"}>
+            <Box
+              pl="3rem"
+              pr={"0.4rem"}
+              cursor={"pointer"}
+              color={"gray.500"}
+              onClick={() => {
+                setToggle((curToggle) => !curToggle);
+                setCommenting(post.id);
+              }}
+            >
+              <BiCommentDetail />
+            </Box>
+            <span style={{ fontSize: "1rem", color: "gray" }}>
+              {post.comments.length ? post.comments.length : null}
+            </span>
+          </Flex>
         </Flex>
       </Flex>
-      {commenting === post.id && toggle && <PostComment postId={post.id} />}
+      {commenting === post.id && toggle && (
+        <PostComment
+          postId={post.id}
+          setCommenting={setCommenting}
+          setToggle={setToggle}
+        />
+      )}
     </>
   );
 }
