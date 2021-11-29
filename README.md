@@ -7,7 +7,6 @@
 - ViteJS
 
 ## WIP
----
 - Like tweets
 - Follow Users
 - Search Users
