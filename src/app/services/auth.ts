@@ -9,7 +9,7 @@ export type User = {
 };
 
 type UserResponse = {
-  user: TUser;
+  user: User;
   token: string;
 };
 
@@ -26,7 +26,7 @@ type SignResponse = {
 };
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/accounts/",
+  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -40,14 +40,14 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
-    login: builder.mutation<TUserResponse, TLoginRequest>({
+    login: builder.mutation<UserResponse, LoginRequest>({
       query: (credentials) => ({
         url: "login",
         method: "POST",
         body: credentials,
       }),
     }),
-    signup: builder.mutation<TUserResponse, TSignResponse>({
+    signup: builder.mutation<UserResponse, SignResponse>({
       query: (credentials) => ({
         url: "signup",
         method: "POST",

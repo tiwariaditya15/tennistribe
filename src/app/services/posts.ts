@@ -13,6 +13,8 @@ export type Comment = {
   comment: string;
   author: Author;
   post: Post;
+  postId?: string;
+  authorId?: string;
 };
 
 export type Post = {
@@ -37,7 +39,7 @@ type CommentResponse = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/",
+  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -78,10 +80,26 @@ export const postsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Posts", id }],
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      // (result, error, { id }) => [{ type: "Posts", id }],
+    }),
+    removeComment: builder.mutation<CommentResponse, Partial<Comment>>({
+      query: (body) => ({
+        url: "comments/delete",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      // (result, error, { id }) => {
+      //   return [{ type: "Posts", id: result?.postId }];
+      // },
     }),
   }),
 });
 
-export const { useAddPostMutation, useGetPostsQuery, useAddCommentMutation } =
-  postsApi;
+export const {
+  useAddPostMutation,
+  useGetPostsQuery,
+  useAddCommentMutation,
+  useRemoveCommentMutation,
+} = postsApi;

@@ -67,7 +67,8 @@ export function Post({
               pr={"0.4rem"}
               cursor={"pointer"}
               color={"gray.500"}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setToggle((curToggle) => !curToggle);
                 setCommenting(post.id);
               }}
