@@ -7,24 +7,20 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Params, useParams } from "react-router-dom";
 import { SideNav } from "../../features/auth/SideNav";
 import { selectPostById } from "../../features/posts/postsSlice";
 import { useAppSelector } from "../hooks";
 import { Post as ViewPost } from "../components/Posts/Post";
 import { Comment } from "../components/Comment";
-import { useGetPostsQuery } from "../services/posts";
+import { useGetPostQuery } from "../services/posts";
 
 export function Post(): JSX.Element {
-  useGetPostsQuery(undefined, {
+  const [commenting, setCommenting] = useState<string>("");
+  const { postId } = useParams();
+  const { data, isLoading } = useGetPostQuery(postId!, {
     pollingInterval: 3000,
   });
-  const [commenting, setCommenting] = useState<string>("");
-  const { postId } = useParams<"postId">();
-  // @ts-ignore
-  const post = useAppSelector((state) => selectPostById(state, postId));
-  const { data, isLoading } = useGetPostsQuery();
-  // const [post] = data?.posts.filter((post) => post.id === postId);
 
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
   const thirdColumn = !isSmallerThan748 ? <GridItem></GridItem> : null;
@@ -35,6 +31,7 @@ export function Post(): JSX.Element {
         <Spinner />
       </Flex>
     );
+  console.log({ data });
   return (
     <Grid templateColumns={"repeat(4, 1fr)"}>
       <GridItem mx={"auto"}>
@@ -48,15 +45,15 @@ export function Post(): JSX.Element {
         borderColor="gray.100"
         height={"100%"}
       >
-        {post && (
+        {data?.post && (
           <ViewPost
-            post={post}
+            post={data?.post}
             commenting={commenting}
             setCommenting={setCommenting}
           />
         )}
-        {post && post.comments.length ? (
-          post.comments.map((comment) => <Comment comment={comment} />)
+        {data?.post && data?.post.comments.length ? (
+          data?.post.comments.map((comment) => <Comment comment={comment} />)
         ) : (
           <Flex
             justify={"center"}

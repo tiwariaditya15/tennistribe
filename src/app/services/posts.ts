@@ -38,6 +38,10 @@ type CommentResponse = {
   authorId: string;
 };
 
+type PostResponse = {
+  post: Post;
+};
+
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://tennistribeApi.tiwariaditya.repl.co",
   prepareHeaders: (headers, { getState }) => {
@@ -66,6 +70,13 @@ export const postsApi = createApi({
             ]
           : [{ type: "Posts", id: "LIST" }],
     }),
+    getPost: builder.query<PostResponse, string>({
+      query: (postId) => `posts/${postId}`,
+      providesTags: (result) => {
+        console.log({ result });
+        return [{ type: "Posts", id: result?.post.id }];
+      },
+    }),
     addPost: builder.mutation<Post, Partial<Post>>({
       query: (body) => ({
         url: "posts",
@@ -81,7 +92,6 @@ export const postsApi = createApi({
         body,
       }),
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
-      // (result, error, { id }) => [{ type: "Posts", id }],
     }),
     removeComment: builder.mutation<CommentResponse, Partial<Comment>>({
       query: (body) => ({
@@ -90,9 +100,6 @@ export const postsApi = createApi({
         body,
       }),
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
-      // (result, error, { id }) => {
-      //   return [{ type: "Posts", id: result?.postId }];
-      // },
     }),
   }),
 });
@@ -100,6 +107,7 @@ export const postsApi = createApi({
 export const {
   useAddPostMutation,
   useGetPostsQuery,
+  useGetPostQuery,
   useAddCommentMutation,
   useRemoveCommentMutation,
 } = postsApi;
