@@ -7,7 +7,9 @@ import { SideNav } from "../../features/auth/SideNav";
 
 export function Home(): JSX.Element {
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
-  const { data, isLoading, isError, error } = useGetPostsQuery();
+  const { data, isLoading, isError, error } = useGetPostsQuery(undefined, {
+    pollingInterval: 3000,
+  });
   const logged = useAppSelector((state) => state.auth.logged);
   const thirdColumn = !isSmallerThan748 ? <GridItem></GridItem> : null;
 

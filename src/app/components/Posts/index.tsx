@@ -10,14 +10,13 @@ type PostsProps = {
 };
 
 export function Posts({ posts }: PostsProps): JSX.Element {
-  const navigate = useNavigate();
   const logged = useAppSelector((state) => state.auth.logged);
   const [commenting, setCommenting] = useState<string>("");
 
   if (!posts)
     return (
       <Flex justify={"center"} mt={"1rem"} color={"gray.600"}>
-        <Text>No posts!</Text>
+        {logged ? <Text>No posts!</Text> : <Text>SignIn to explore</Text>}
       </Flex>
     );
   return (

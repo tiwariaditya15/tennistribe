@@ -41,7 +41,14 @@ export function Comment({ comment }: CommentProps): JSX.Element {
         color={"gray.600"}
       >
         <Text>{comment.comment}</Text>
-        <Box cursor={"pointer"} onClick={handleRemoveComment}>
+        <Box
+          cursor={"pointer"}
+          onClick={() => {
+            if (!isLoading) {
+              handleRemoveComment();
+            }
+          }}
+        >
           {isLoading ? <Spinner /> : <AiFillDelete />}
         </Box>
       </Flex>

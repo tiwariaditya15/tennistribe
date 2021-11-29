@@ -16,6 +16,9 @@ import { Comment } from "../components/Comment";
 import { useGetPostsQuery } from "../services/posts";
 
 export function Post(): JSX.Element {
+  useGetPostsQuery(undefined, {
+    pollingInterval: 3000,
+  });
   const [commenting, setCommenting] = useState<string>("");
   const { postId } = useParams<"postId">();
   // @ts-ignore
