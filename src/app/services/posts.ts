@@ -1,6 +1,13 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
+type User = {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+};
+
 type Author = {
   id?: string;
   name: string;
@@ -25,6 +32,7 @@ export type Post = {
   media?: string;
   author: Author;
   comments: Comment[];
+  likedBy: User[];
 };
 
 type PostsReponse = {
@@ -40,10 +48,19 @@ type CommentResponse = {
 
 type PostResponse = {
   post: Post;
+  message: string;
+  postId: string;
 };
 
+type RemoveResponse = {
+  postId: string;
+};
+
+// http://localhost:5000
+// https://tennistribeApi.tiwariaditya.repl.co
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co",
+  baseUrl: "http://localhost:5000",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -60,7 +77,7 @@ export const postsApi = createApi({
   baseQuery: baseQueryWithRetry,
   tagTypes: ["Posts"],
   endpoints: (builder) => ({
-    getPosts: builder.query<PostsReponse, void>({
+    getFeed: builder.query<PostsReponse, void>({
       query: () => "posts",
       providesTags: (result) =>
         result
@@ -72,10 +89,7 @@ export const postsApi = createApi({
     }),
     getPost: builder.query<PostResponse, string>({
       query: (postId) => `posts/${postId}`,
-      providesTags: (result) => {
-        console.log({ result });
-        return [{ type: "Posts", id: result?.post.id }];
-      },
+      providesTags: (result) => [{ type: "Posts", id: result?.post.id }],
     }),
     addPost: builder.mutation<Post, Partial<Post>>({
       query: (body) => ({
@@ -85,29 +99,42 @@ export const postsApi = createApi({
       }),
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
+    removePost: builder.mutation<RemoveResponse, string>({
+      query: (postId) => ({
+        url: "posts/delete",
+        method: "POST",
+        body: { postId },
+      }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+    }),
     addComment: builder.mutation<CommentResponse, Partial<CommentResponse>>({
       query: (body) => ({
         url: "comments",
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Posts", id: result?.postId },
+      ],
     }),
-    removeComment: builder.mutation<CommentResponse, Partial<Comment>>({
+    removeComment: builder.mutation<RemoveResponse, Partial<Comment>>({
       query: (body) => ({
         url: "comments/delete",
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Posts", id: result?.postId },
+      ],
     }),
   }),
 });
 
 export const {
   useAddPostMutation,
-  useGetPostsQuery,
+  useGetFeedQuery,
   useGetPostQuery,
   useAddCommentMutation,
   useRemoveCommentMutation,
+  useRemovePostMutation,
 } = postsApi;

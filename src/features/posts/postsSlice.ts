@@ -12,7 +12,7 @@ const postSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      postsApi.endpoints.getPosts.matchFulfilled,
+      postsApi.endpoints.getFeed.matchFulfilled,
       (state, action) => {
         postsAdapter.upsertMany(state, action.payload.posts);
       }

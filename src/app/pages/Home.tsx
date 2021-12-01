@@ -2,12 +2,12 @@ import { Grid, GridItem, Flex, useMediaQuery, Spinner } from "@chakra-ui/react";
 import { Posts } from "../components/Posts";
 import { CreatePost } from "../../features/posts";
 import { useAppSelector } from "../hooks";
-import { useGetPostsQuery } from "../services/posts";
+import { useGetFeedQuery } from "../services/posts";
 import { SideNav } from "../../features/auth/SideNav";
 
 export function Home(): JSX.Element {
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
-  const { data, isLoading, isError, error } = useGetPostsQuery(undefined, {
+  const { data, isLoading, isError, error } = useGetFeedQuery(undefined, {
     pollingInterval: 3000,
   });
   const logged = useAppSelector((state) => state.auth.logged);

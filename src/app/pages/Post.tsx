@@ -9,8 +9,6 @@ import {
 import { useState } from "react";
 import { Params, useParams } from "react-router-dom";
 import { SideNav } from "../../features/auth/SideNav";
-import { selectPostById } from "../../features/posts/postsSlice";
-import { useAppSelector } from "../hooks";
 import { Post as ViewPost } from "../components/Posts/Post";
 import { Comment } from "../components/Comment";
 import { useGetPostQuery } from "../services/posts";
@@ -31,7 +29,6 @@ export function Post(): JSX.Element {
         <Spinner />
       </Flex>
     );
-  console.log({ data });
   return (
     <Grid templateColumns={"repeat(4, 1fr)"}>
       <GridItem mx={"auto"}>
@@ -53,7 +50,9 @@ export function Post(): JSX.Element {
           />
         )}
         {data?.post && data?.post.comments.length ? (
-          data?.post.comments.map((comment) => <Comment comment={comment} />)
+          data?.post.comments.map((comment) => (
+            <Comment comment={comment} key={comment.id} />
+          ))
         ) : (
           <Flex
             justify={"center"}

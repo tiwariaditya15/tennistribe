@@ -26,6 +26,7 @@ export function Posts({ posts }: PostsProps): JSX.Element {
           post={post}
           commenting={commenting}
           setCommenting={setCommenting}
+          key={post.id}
         />
       ))}
     </>

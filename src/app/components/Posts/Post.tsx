@@ -7,6 +7,7 @@ import { useAppSelector } from "../../hooks";
 import { PostComment } from "../../../features/posts/PostComment";
 import { useToggle } from "../../hooks/useToggle";
 import { useNavigate } from "react-router-dom";
+import { PostMenu } from "../PostMenu";
 
 type PostProps = {
   post: PostType;
@@ -21,8 +22,10 @@ export function Post({
 }: PostProps): JSX.Element {
   const navigate = useNavigate();
   const { setToggle, toggle } = useToggle();
-  const currentUser = useAppSelector((state) => state.auth.currentUser?.email);
-  const isAuthor = currentUser === post.author.email ? true : false;
+  const currentUserEmail = useAppSelector(
+    (state) => state.auth.currentUser?.email
+  );
+
   const date = moment(post.timestamp, "YYYYMMDD").fromNow();
   return (
     <>
@@ -36,7 +39,7 @@ export function Post({
         cursor={"pointer"}
       >
         {/* card-header */}
-        <Flex justify={"flex-start"}>
+        <Flex justify={"space-between"}>
           <Flex>
             <Box color={"gray.600"} pr="0.2rem">
               {post.author.name}
@@ -44,8 +47,11 @@ export function Post({
             <Box color={"gray.400"} pr="0.2rem">
               @{post.author.username}
             </Box>
+            <Box color={"gray.400"}>&middot;{date}</Box>
           </Flex>
-          <Box color={"gray.400"}>&middot;{date}</Box>
+          <Box onClick={(e) => e.stopPropagation()}>
+            <PostMenu postId={post.id} />
+          </Box>
         </Flex>
         {/* card-content */}
         <Flex py="0.5rem" color={"gray.600"}>
@@ -58,8 +64,27 @@ export function Post({
           pl={"0.4rem"}
           alignItems={"center"}
         >
-          <Box color={"red.500"} cursor={"pointer"}>
-            {isAuthor ? <AiFillHeart /> : <AiOutlineHeart />}
+          <Box
+            cursor={"pointer"}
+            color={"gray.500"}
+            display={"flex"}
+            alignItems={"center"}
+          >
+            <Box
+              color={"red.500"}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {post.likedBy.some((user) => user.email === currentUserEmail) ? (
+                <AiFillHeart />
+              ) : (
+                <AiOutlineHeart />
+              )}
+            </Box>
+            <Box fontSize={"smaller"}>
+              {post.likedBy.length && post.likedBy.length}
+            </Box>
           </Box>
           <Flex alignItems={"center"}>
             <Box
