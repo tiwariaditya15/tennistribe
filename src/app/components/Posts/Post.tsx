@@ -1,5 +1,8 @@
-import { Post as PostType } from "../../services/posts";
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Post as PostType,
+  useToggleReactionMutation,
+} from "../../services/posts";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import moment from "moment";
@@ -26,7 +29,16 @@ export function Post({
     (state) => state.auth.currentUser?.email
   );
 
+  const [toggleReaction, { isLoading: isReacting }] =
+    useToggleReactionMutation();
   const date = moment(post.timestamp, "YYYYMMDD").fromNow();
+  const icon = isReacting ? (
+    <Spinner />
+  ) : post.likedBy.some((user) => user.email === currentUserEmail) ? (
+    <AiFillHeart />
+  ) : (
+    <AiOutlineHeart />
+  );
   return (
     <>
       <Flex
@@ -49,8 +61,10 @@ export function Post({
             </Box>
             <Box color={"gray.400"}>&middot;{date}</Box>
           </Flex>
-          <Box onClick={(e) => e.stopPropagation()}>
-            <PostMenu postId={post.id} />
+          <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
+            {post.author.email === currentUserEmail && (
+              <PostMenu postId={post.id} />
+            )}
           </Box>
         </Flex>
         {/* card-content */}
@@ -72,15 +86,15 @@ export function Post({
           >
             <Box
               color={"red.500"}
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
+                if (isReacting) return;
+                try {
+                  await toggleReaction(post.id).unwrap();
+                } catch (error: any) {}
               }}
             >
-              {post.likedBy.some((user) => user.email === currentUserEmail) ? (
-                <AiFillHeart />
-              ) : (
-                <AiOutlineHeart />
-              )}
+              {icon}
             </Box>
             <Box fontSize={"smaller"}>
               {post.likedBy.length && post.likedBy.length}

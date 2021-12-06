@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authApi } from "../../app/services/auth";
+import { authApi, JWTError } from "../../app/services/auth";
 import { AuthState } from "./authSlice.types";
 
 const initialState: AuthState = {
-  logged: false,
-  token: null,
+  logged: localStorage.getItem("token") ? true : false,
+  token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
   currentUser: null,
   error: null,
 };
@@ -41,6 +41,32 @@ const authSlice = createSlice({
         state.currentUser = action.payload.user;
         state.token = action.payload.token;
         state.logged = true;
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.validateToken.matchFulfilled,
+      (state, action) => {
+        if (action.payload.user) {
+          state.currentUser = action.payload.user;
+          state.error = null;
+        }
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.validateToken.matchRejected,
+      (
+        state,
+        {
+          payload: { data },
+        }: PayloadAction<{ status: number; data: { error: JWTError } }>
+      ) => {
+        if ("name" in data.error && data.error.name === "TokenExpiredError") {
+          state.logged = false;
+          state.token = null;
+          state.error = "Token expired.";
+          state.currentUser = null;
+          localStorage.removeItem("token");
+        }
       }
     );
   },

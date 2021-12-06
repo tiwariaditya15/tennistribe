@@ -25,8 +25,22 @@ type SignResponse = {
   password: string;
 };
 
+export type JWTError = {
+  name: string;
+  message: string;
+  expiredAt: string;
+};
+
+type TokenValidattion = {
+  user?: User;
+  error?: JWTError;
+};
+
+// http://localhost:5000/accounts
+// https://tennistribeApi.tiwariaditya.repl.co/accounts
+
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
+  baseUrl: "http://localhost:5000/accounts",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -40,6 +54,9 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
+    validateToken: builder.query<TokenValidattion, void>({
+      query: () => "/validate",
+    }),
     login: builder.mutation<UserResponse, LoginRequest>({
       query: (credentials) => ({
         url: "login",
@@ -57,4 +74,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authApi;
+export const { useValidateTokenQuery, useLoginMutation, useSignupMutation } =
+  authApi;

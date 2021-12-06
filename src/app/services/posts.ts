@@ -56,6 +56,11 @@ type RemoveResponse = {
   postId: string;
 };
 
+type ToggleReactionResponse = {
+  postId: string;
+  message: string;
+};
+
 // http://localhost:5000
 // https://tennistribeApi.tiwariaditya.repl.co
 
@@ -127,6 +132,18 @@ export const postsApi = createApi({
         { type: "Posts", id: result?.postId },
       ],
     }),
+    toggleReaction: builder.mutation<ToggleReactionResponse, string>({
+      query: (postId) => ({
+        url: "reactions/toggle",
+        method: "POST",
+        body: {
+          postId,
+        },
+      }),
+      invalidatesTags: (result, error) => [
+        { type: "Posts", id: result?.postId },
+      ],
+    }),
   }),
 });
 
@@ -137,4 +154,5 @@ export const {
   useAddCommentMutation,
   useRemoveCommentMutation,
   useRemovePostMutation,
+  useToggleReactionMutation,
 } = postsApi;

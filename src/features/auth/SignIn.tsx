@@ -43,7 +43,8 @@ export function SignIn(): JSX.Element {
     }),
     onSubmit: async (values) => {
       try {
-        await login(values).unwrap();
+        const response = await login(values).unwrap();
+        localStorage.setItem("token", response.token);
       } catch (error: any) {
         dispatch(setError(error.data.error));
       }

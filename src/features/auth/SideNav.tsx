@@ -33,7 +33,7 @@ export function SideNav(): JSX.Element {
         {logged ? (
           <Box cursor={"pointer"}>
             <Text>{currentUser?.name}</Text>
-            <Text color={"gray.400"}>@{currentUser?.username}</Text>
+            <Text color={"gray.400"}>{currentUser?.username}</Text>
           </Box>
         ) : (
           <Button
