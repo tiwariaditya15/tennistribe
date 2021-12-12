@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import postsReducer from "../features/posts/postsSlice";
-import { authApi, postsApi } from "./services";
+import { authApi, postsApi, usersApi } from "./services";
 
 export const store = configureStore({
   reducer: {
@@ -9,9 +9,14 @@ export const store = configureStore({
     posts: postsReducer,
     [authApi.reducerPath]: authApi.reducer,
     [postsApi.reducerPath]: postsApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, postsApi.middleware),
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      postsApi.middleware,
+      usersApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
