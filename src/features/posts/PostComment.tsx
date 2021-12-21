@@ -11,6 +11,7 @@ import { useAddCommentMutation } from "../../app/services/posts";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useError } from "../../app/hooks/useError";
+import { useState } from "react";
 
 type PostCommentProps = {
   postId: string;
@@ -32,7 +33,7 @@ export function PostComment({
   setToggle,
 }: PostCommentProps): JSX.Element {
   const toast = useToast();
-  const [error, setError] = useError(null);
+  const [error, setError] = useState<string | null>(null);
   const [addComment, { isLoading }] = useAddCommentMutation();
   const formik = useFormik({
     initialValues,
