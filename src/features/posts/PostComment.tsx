@@ -32,7 +32,7 @@ export function PostComment({
   setToggle,
 }: PostCommentProps): JSX.Element {
   const toast = useToast();
-  const { error, setError } = useError(null);
+  const [error, setError] = useError(null);
   const [addComment, { isLoading }] = useAddCommentMutation();
   const formik = useFormik({
     initialValues,
