@@ -10,7 +10,7 @@ type FollowResponse = {
 // https://tennistribeApi.tiwariaditya.repl.co/users
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/users",
+  baseUrl: "http://localhost:5000/users",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {

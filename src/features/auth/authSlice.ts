@@ -60,7 +60,11 @@ const authSlice = createSlice({
           payload: { data },
         }: PayloadAction<{ status: number; data: { error: JWTError } }>
       ) => {
-        if ("name" in data.error && data.error.name === "TokenExpiredError") {
+        if (
+          data &&
+          "name" in data.error &&
+          data.error.name === "TokenExpiredError"
+        ) {
           state.logged = false;
           state.token = null;
           state.error = "Token expired.";

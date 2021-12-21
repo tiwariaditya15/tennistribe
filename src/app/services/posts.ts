@@ -65,7 +65,7 @@ type ToggleReactionResponse = {
 // https://tennistribeApi.tiwariaditya.repl.co
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co",
+  baseUrl: "http://localhost:5000",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {

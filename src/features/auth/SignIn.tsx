@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -26,6 +26,7 @@ const initialValues: InitialValues = {
 };
 
 export function SignIn(): JSX.Element {
+  const btnRef = useRef(null);
   const [hidden, setHidden] = useState<boolean>(true);
 
   const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
@@ -116,8 +117,8 @@ export function SignIn(): JSX.Element {
         <Button
           mt="1rem"
           onClick={() => {
-            formik.setFieldValue("username", "tiwsadi");
-            formik.setFieldValue("password", "tiwsadi@123");
+            formik.setFieldValue("username", "traviscott");
+            formik.setFieldValue("password", "travis@123");
           }}
         >
           Fill Credentials
