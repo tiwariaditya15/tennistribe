@@ -1,5 +1,6 @@
 import { Grid, GridItem, Flex, useMediaQuery, Spinner } from "@chakra-ui/react";
 import { Posts } from "../components/Posts";
+import { Users } from "../components/Users";
 import { CreatePost } from "../../features/posts";
 import { useAppSelector } from "../hooks";
 import { useGetFeedQuery } from "../services/posts";
@@ -11,7 +12,11 @@ export function Home(): JSX.Element {
     pollingInterval: 3000,
   });
   const logged = useAppSelector((state) => state.auth.logged);
-  const thirdColumn = !isSmallerThan748 ? <GridItem></GridItem> : null;
+  const thirdColumn = !isSmallerThan748 ? (
+    <GridItem>
+      <Users />
+    </GridItem>
+  ) : null;
 
   return (
     <Grid templateColumns={"repeat(4, 1fr)"}>
