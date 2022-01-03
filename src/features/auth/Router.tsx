@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Post } from "../../app/pages";
+import { Home, Post, Profile } from "../../app/pages";
 import PrivateRoute from "./PrivateRoute";
 
 import { SignIn } from "./SignIn";
@@ -15,6 +15,14 @@ export function Router() {
         element={
           <PrivateRoute>
             <Post />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         }
       />

@@ -28,7 +28,7 @@ export function Home(): JSX.Element {
         borderLeft="1px"
         borderRight="1px"
         borderColor="gray.100"
-        height={"100%"}
+        height={"100vh"}
       >
         {logged ? <CreatePost /> : null}
         {isLoading ? (
