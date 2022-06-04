@@ -117,7 +117,7 @@ export function SignIn(): JSX.Element {
         <Button
           mt="1rem"
           onClick={() => {
-            formik.setFieldValue("username", "traviscott");
+            formik.setFieldValue("username", "travisscott");
             formik.setFieldValue("password", "travis@123");
           }}
         >
