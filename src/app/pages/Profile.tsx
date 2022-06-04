@@ -10,19 +10,5 @@ export function Profile(): JSX.Element {
     </GridItem>
   ) : null;
 
-  return (
-    <Grid templateColumns={"repeat(4, 1fr)"}>
-      <GridItem mx={"auto"}>
-        <SideNav />
-      </GridItem>
-      <GridItem
-        colSpan={isSmallerThan748 ? 3 : 2}
-        borderLeft="1px"
-        borderRight="1px"
-        borderColor="gray.100"
-        height={"100vh"}
-      ></GridItem>
-      {thirdColumn}
-    </Grid>
-  );
+  return <>Profile</>;
 }
