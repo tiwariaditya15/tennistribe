@@ -1,14 +1,12 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Spinner, Text } from "@chakra-ui/react";
 import { useGetUsersQuery } from "../../services/users";
 import { User } from "./User";
 export function Users(): JSX.Element {
   const { data, isLoading, isError } = useGetUsersQuery();
   if (isLoading) {
     return (
-      <Flex justify={"center"}>
-        <Text color={"gray.500"} mt={"0.5rem"}>
-          Loading users...
-        </Text>
+      <Flex justify={"center"} mt={"1rem"}>
+        <Spinner />
       </Flex>
     );
   }
