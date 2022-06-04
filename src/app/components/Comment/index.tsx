@@ -4,12 +4,14 @@ import {
   useRemoveCommentMutation,
 } from "../../services/posts";
 import { AiFillDelete } from "react-icons/ai";
+import { useAppSelector } from "../../hooks";
 
 type CommentProps = {
   comment: CommentType;
 };
 export function Comment({ comment }: CommentProps): JSX.Element {
   const toast = useToast();
+  const currentUser = useAppSelector((state) => state.auth.currentUser);
   const [removeComment, { isLoading }] = useRemoveCommentMutation();
   const handleRemoveComment = async () => {
     try {
@@ -24,6 +26,19 @@ export function Comment({ comment }: CommentProps): JSX.Element {
       });
     } catch (error) {}
   };
+  const deleteIcon =
+    comment.author.username === currentUser?.username ? (
+      <Box
+        cursor={"pointer"}
+        onClick={() => {
+          if (!isLoading) {
+            handleRemoveComment();
+          }
+        }}
+      >
+        {isLoading ? <Spinner /> : <AiFillDelete />}
+      </Box>
+    ) : null;
   return (
     <Flex
       flexDirection={"column"}
@@ -41,16 +56,7 @@ export function Comment({ comment }: CommentProps): JSX.Element {
         color={"gray.600"}
       >
         <Text>{comment.comment}</Text>
-        <Box
-          cursor={"pointer"}
-          onClick={() => {
-            if (!isLoading) {
-              handleRemoveComment();
-            }
-          }}
-        >
-          {isLoading ? <Spinner /> : <AiFillDelete />}
-        </Box>
+        {deleteIcon}
       </Flex>
     </Flex>
   );
