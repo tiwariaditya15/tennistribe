@@ -10,7 +10,7 @@ export function SideNav(): JSX.Element {
   return (
     <Flex flexDirection={"column"} h={"100%"}>
       <Box
-        py={"1.5rem"}
+        py={"1.2rem"}
         color={"gray.600"}
         cursor={"pointer"}
         fontWeight={"medium"}
@@ -20,7 +20,7 @@ export function SideNav(): JSX.Element {
         Home
       </Box>
       <Box
-        py={"1.5rem"}
+        py={"1.2rem"}
         color={"gray.600"}
         cursor={"pointer"}
         fontWeight={"medium"}
@@ -29,7 +29,7 @@ export function SideNav(): JSX.Element {
       >
         Profile
       </Box>
-      <Box color={"gray.600"} py={"1.5rem"}>
+      <Box color={"gray.600"} py={"1.2rem"}>
         {logged ? (
           <Box cursor={"pointer"}>
             <Text>{currentUser?.name}</Text>
