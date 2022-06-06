@@ -1,13 +1,15 @@
-import { Grid, GridItem, Flex, useMediaQuery, Spinner } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import { Posts } from "../components/Posts";
-import { Users } from "../components/Users";
 import { CreatePost } from "../../features/posts";
 import { useAppSelector } from "../hooks";
 import { useGetFeedQuery } from "../services/posts";
 
 export function Home(): JSX.Element {
-  const { data, isLoading, isError, error } = useGetFeedQuery(undefined, {});
   const logged = useAppSelector((state) => state.auth.logged);
+  const { data, isLoading, isError, error } = useGetFeedQuery(undefined, {
+    refetchOnFocus: true,
+    skip: !logged,
+  });
   return (
     <>
       {logged ? <CreatePost /> : null}

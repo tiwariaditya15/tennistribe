@@ -6,6 +6,8 @@ export type User = {
   username: string;
   email: string;
   joined: string;
+  following: { name: string; username: string; email: string }[];
+  followedBy: { name: string; username: string; email: string }[];
 };
 
 type UserResponse = {
@@ -36,11 +38,11 @@ type TokenValidattion = {
   error?: JWTError;
 };
 
-// http://localhost:5000/accounts
+// http://localhost:8000/accounts
 // https://tennistribeApi.tiwariaditya.repl.co/accounts
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
+  baseUrl: "http://localhost:8000/accounts",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -53,6 +55,7 @@ export const baseQuery = fetchBaseQuery({
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
+  tagTypes: ["Profile"],
   endpoints: (builder) => ({
     validateToken: builder.query<TokenValidattion, void>({
       query: () => "/validate",
