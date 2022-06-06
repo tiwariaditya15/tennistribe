@@ -23,6 +23,18 @@ const authSlice = createSlice({
     setError(state, action: PayloadAction<string>) {
       state.error = action.payload;
     },
+    addFollower(
+      state,
+      action: PayloadAction<{ name: string; username: string; email: string }>
+    ) {
+      state.currentUser?.following.push(action.payload);
+    },
+    removeFollower(state, action: PayloadAction<{ username: string }>) {
+      if (!state.currentUser) return;
+      state.currentUser.following = state.currentUser?.following.filter(
+        (user) => user.username !== action.payload.username
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -76,5 +88,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, removeToken, setError } = authSlice.actions;
+export const { setToken, removeToken, setError, addFollower, removeFollower } =
+  authSlice.actions;
 export default authSlice.reducer;
