@@ -19,7 +19,7 @@ export function Router() {
         }
       />
       <Route
-        path="/profile"
+        path="/profile/:username"
         element={
           <PrivateRoute>
             <Profile />
