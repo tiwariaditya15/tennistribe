@@ -1,14 +1,6 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Spinner,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
-import { Params, useParams } from "react-router-dom";
-import { SideNav } from "../../features/auth/SideNav";
+import { useParams } from "react-router-dom";
 import { Post as ViewPost } from "../components/Posts/Post";
 import { Comment } from "../components/Comment";
 import { useGetPostQuery } from "../services/posts";
@@ -19,9 +11,6 @@ export function Post(): JSX.Element {
   const { data, isLoading } = useGetPostQuery(postId!, {
     pollingInterval: 3000,
   });
-
-  const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
-  const thirdColumn = !isSmallerThan748 ? <GridItem></GridItem> : null;
 
   if (isLoading)
     return (
