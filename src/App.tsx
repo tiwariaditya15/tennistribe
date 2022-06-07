@@ -3,19 +3,22 @@ import { Router, Navbar } from "./features/auth/";
 import { Grid, GridItem, useMediaQuery } from "@chakra-ui/react";
 import { SideNav } from "./features/auth/SideNav";
 import { Users } from "./app/components/Users";
+import { useAppSelector } from "./app/hooks";
 
 function App() {
   useValidateTokenQuery();
+  const logged = useAppSelector((state) => state.auth.logged);
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
-  const thirdColumn = !isSmallerThan748 ? (
-    <GridItem>
-      <Users />
-    </GridItem>
-  ) : null;
+  const thirdColumn =
+    logged && !isSmallerThan748 ? (
+      <GridItem>
+        <Users />
+      </GridItem>
+    ) : null;
   return (
     <>
       <Navbar />
-      <Grid templateColumns={"repeat(4, 1fr)"}>
+      <Grid templateColumns={`repeat(4, 1fr)`}>
         <GridItem mx={"auto"}>
           <SideNav />
         </GridItem>
