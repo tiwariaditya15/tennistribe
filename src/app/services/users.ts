@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { RootState } from "../store";
 import { User } from "./auth";
+import { Post } from "./posts";
 
 type FollowResponse = {
   followed: boolean;
@@ -10,7 +11,12 @@ type UsersReponse = {
   users: Partial<User>[];
 };
 
-// http://localhost:5000/users
+type ProfileResponse = {
+  user: User;
+  posts: Post[];
+};
+
+// http://localhost:8000/users
 // https://tennistribeApi.tiwariaditya.repl.co/users
 
 const baseQuery = fetchBaseQuery({
@@ -58,10 +64,26 @@ export const usersApi = createApi({
           username,
         },
       }),
-      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    unfollow: builder.mutation<FollowResponse, string>({
+      query: (username) => ({
+        url: `unfollow`,
+        method: "POST",
+        body: {
+          username,
+        },
+      }),
+    }),
+    getProfile: builder.query<ProfileResponse, string>({
+      query: (username) => `profile/${username}`,
     }),
   }),
 });
 
-export const { useFollowMutation, useGetCurrentUserQuery, useGetUsersQuery } =
-  usersApi;
+export const {
+  useFollowMutation,
+  useGetCurrentUserQuery,
+  useGetUsersQuery,
+  useUnfollowMutation,
+  useGetProfileQuery,
+} = usersApi;
