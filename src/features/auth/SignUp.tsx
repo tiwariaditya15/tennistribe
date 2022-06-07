@@ -33,7 +33,7 @@ export function SignUp(): JSX.Element {
   const [hidden, setHidden] = useState(true);
 
   const dispatch = useAppDispatch();
-  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
+  const width = useBreakpointValue({ base: "95%", md: "95%", lg: "95%" });
   const logged = useAppSelector((state) => state.auth.logged);
   const [signup, { isLoading }] = useSignupMutation();
 

@@ -21,15 +21,15 @@ type InitialValues = {
   password: string;
 };
 const initialValues: InitialValues = {
-  username: "",
-  password: "",
+  username: "travisscott",
+  password: "travis@123",
 };
 
 export function SignIn(): JSX.Element {
   const btnRef = useRef(null);
   const [hidden, setHidden] = useState<boolean>(true);
 
-  const width = useBreakpointValue({ base: "95%", md: "50%", lg: "25%" });
+  const width = useBreakpointValue({ base: "95%", md: "95%", lg: "95%" });
   const logged = useAppSelector((state) => state.auth.logged);
   const authError = useAppSelector((state) => state.auth.error);
   const dispatch = useAppDispatch();
