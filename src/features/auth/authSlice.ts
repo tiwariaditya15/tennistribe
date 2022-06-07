@@ -17,8 +17,10 @@ const authSlice = createSlice({
       state.error = null;
       state.token = action.payload;
     },
-    removeToken(state) {
+    logout(state) {
+      state.logged = false;
       state.token = null;
+      localStorage.removeItem("token");
     },
     setError(state, action: PayloadAction<string>) {
       state.error = action.payload;
@@ -88,6 +90,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, removeToken, setError, addFollower, removeFollower } =
+export const { setToken, logout, setError, addFollower, removeFollower } =
   authSlice.actions;
 export default authSlice.reducer;
