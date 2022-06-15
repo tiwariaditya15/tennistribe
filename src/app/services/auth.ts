@@ -42,7 +42,7 @@ type TokenValidattion = {
 // https://tennistribeApi.tiwariaditya.repl.co/accounts
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
+  baseUrl: "http://localhost:8000/accounts",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -55,7 +55,7 @@ export const baseQuery = fetchBaseQuery({
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
-  tagTypes: ["Profile"],
+  tagTypes: [],
   endpoints: (builder) => ({
     validateToken: builder.query<TokenValidattion, void>({
       query: () => "/validate",

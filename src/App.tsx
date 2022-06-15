@@ -19,7 +19,7 @@ function App() {
     <>
       <Navbar />
       <Grid templateColumns={`repeat(4, 1fr)`}>
-        <GridItem mx={"auto"}>
+        <GridItem mx={"auto"} p={0}>
           <SideNav />
         </GridItem>
         <GridItem
@@ -28,6 +28,7 @@ function App() {
           borderRight="1px"
           borderColor="gray.100"
           height={"100vh"}
+          overflowX={"scroll"}
         >
           <Router />
         </GridItem>

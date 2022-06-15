@@ -142,7 +142,15 @@ export function SignUp(): JSX.Element {
           mt="1rem"
           onClick={() => formik.handleSubmit()}
         >
-          {isLoading ? <Spinner /> : "SignUp"}
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              emptyColor={"gray.200"}
+              color={"blue.400"}
+            />
+          ) : (
+            "SignUp"
+          )}
         </Button>
       </Box>
       <Box mt="1rem">

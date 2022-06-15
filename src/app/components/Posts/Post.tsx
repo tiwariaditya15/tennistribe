@@ -5,7 +5,7 @@ import {
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import moment from "moment";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useAppSelector } from "../../hooks";
 import { PostComment } from "../../../features/posts/PostComment";
 import { useToggle } from "../../hooks/useToggle";
@@ -31,9 +31,9 @@ export function Post({
 
   const [toggleReaction, { isLoading: isReacting }] =
     useToggleReactionMutation();
-  const date = moment(post.timestamp, "YYYYMMDD").fromNow();
+  const date = formatDistanceToNow(new Date(post.timestamp));
   const icon = isReacting ? (
-    <Spinner />
+    <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
   ) : post.likedBy.some((user) => user.email === currentUserEmail) ? (
     <AiFillHeart />
   ) : (
@@ -59,7 +59,7 @@ export function Post({
             <Box color={"gray.400"} pr="0.2rem">
               @{post.author.username}
             </Box>
-            <Box color={"gray.400"}>&middot;{date}</Box>
+            <Box color={"gray.400"}>&middot;{date} ago</Box>
           </Flex>
           <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
             {post.author.email === currentUserEmail && (
@@ -83,6 +83,7 @@ export function Post({
             color={"gray.500"}
             display={"flex"}
             alignItems={"center"}
+            gridGap={2}
           >
             <Box
               color={"red.500"}
@@ -100,7 +101,7 @@ export function Post({
               {post.likedBy.length && post.likedBy.length}
             </Box>
           </Box>
-          <Flex alignItems={"center"}>
+          <Flex alignItems={"center"} gridGap={1}>
             <Box
               pl="3rem"
               pr={"0.4rem"}

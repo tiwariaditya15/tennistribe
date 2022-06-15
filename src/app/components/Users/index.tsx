@@ -6,7 +6,7 @@ export function Users(): JSX.Element {
   if (isLoading) {
     return (
       <Flex justify={"center"} mt={"1rem"}>
-        <Spinner />
+        <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
       </Flex>
     );
   }

@@ -51,45 +51,64 @@ export function CreatePost(): JSX.Element {
   });
   return (
     <Box borderBottom={"1px"} borderColor={"gray.100"} py={"1rem"} px="1.5rem">
-      <Textarea
-        type="text"
-        placeholder="What's popping tennis jocks?"
-        id="content"
-        variant={"unstyled"}
-        {...formik.getFieldProps("content")}
-      />
-      {formik.touched.content && (
-        <Text color={"red.400"}>
-          {formik.errors.content ? formik.errors.content : null}
-        </Text>
-      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!isLoading) {
+            formik.handleSubmit();
+          }
+        }}
+      >
+        <Textarea
+          type="text"
+          placeholder="What's popping tennis jocks?"
+          id="content"
+          variant={"unstyled"}
+          {...formik.getFieldProps("content")}
+        />
+        {formik.touched.content && (
+          <Text color={"red.400"}>
+            {formik.errors.content ? formik.errors.content : null}
+          </Text>
+        )}
 
-      <Flex justify={"space-between"} mt="1rem">
-        <Box
-          color={"gray.600"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <FormLabel htmlFor="img" cursor={"pointer"}>
-            <BsImage />
-          </FormLabel>
-          <Input type={"file"} id="img" name="img" w={"5%"} display={"none"} />
-        </Box>
-        <Button
-          colorScheme={"twitter"}
-          bgColor={"twitter.500"}
-          borderRadius={"4rem"}
-          px="2rem"
-          onClick={() => {
-            if (!isLoading) {
-              formik.handleSubmit();
-            }
-          }}
-        >
-          {isLoading ? <Spinner /> : "Post"}
-        </Button>
-      </Flex>
+        <Flex justify={"space-between"} mt="1rem">
+          <Box
+            color={"gray.600"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <FormLabel htmlFor="img" cursor={"pointer"}>
+              <BsImage />
+            </FormLabel>
+            <Input
+              type={"file"}
+              id="img"
+              name="img"
+              w={"5%"}
+              display={"none"}
+            />
+          </Box>
+          <Button
+            type="submit"
+            colorScheme={"twitter"}
+            bgColor={"twitter.500"}
+            borderRadius={"4rem"}
+            px="2rem"
+          >
+            {isLoading ? (
+              <Spinner
+                thickness="3px"
+                emptyColor={"gray.200"}
+                color={"blue.400"}
+              />
+            ) : (
+              "Post"
+            )}
+          </Button>
+        </Flex>
+      </form>
     </Box>
   );
 }

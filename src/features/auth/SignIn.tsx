@@ -110,7 +110,15 @@ export function SignIn(): JSX.Element {
           mt="1rem"
           onClick={() => formik.handleSubmit()}
         >
-          {isLoading ? <Spinner /> : "SignIn"}
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              emptyColor={"gray.200"}
+              color={"blue.400"}
+            />
+          ) : (
+            "SignIn"
+          )}
         </Button>
       </Box>
       <Box>

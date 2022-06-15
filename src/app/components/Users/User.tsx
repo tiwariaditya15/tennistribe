@@ -77,7 +77,11 @@ export function User({ user }: UserProps): JSX.Element {
         {!loggedUserFollows ? (
           <Button onClick={handleFollowUnFollow}>
             {isFollowing ? (
-              <Spinner />
+              <Spinner
+                thickness="3px"
+                emptyColor={"gray.200"}
+                color={"blue.400"}
+              />
             ) : loggedUserFollows ? (
               "Following"
             ) : (

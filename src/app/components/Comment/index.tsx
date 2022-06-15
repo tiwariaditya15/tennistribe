@@ -36,7 +36,11 @@ export function Comment({ comment }: CommentProps): JSX.Element {
           }
         }}
       >
-        {isLoading ? <Spinner /> : <AiFillDelete />}
+        {isLoading ? (
+          <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
+        ) : (
+          <AiFillDelete />
+        )}
       </Box>
     ) : null;
   return (

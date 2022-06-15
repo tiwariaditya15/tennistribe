@@ -15,7 +15,7 @@ export function Home(): JSX.Element {
       {logged ? <CreatePost /> : null}
       {isLoading ? (
         <Flex justify="center" mt="1rem">
-          <Spinner />
+          <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
         </Flex>
       ) : (
         <Posts posts={data?.posts} />

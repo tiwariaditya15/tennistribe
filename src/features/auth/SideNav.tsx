@@ -6,12 +6,20 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  useMediaQuery,
+  VStack,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "./authSlice";
+import {
+  IconoirHome,
+  IconoirMoreHorizCircledOutline,
+  IconoirProfileCircled,
+} from "../../app/components/icons";
 
 export function SideNav(): JSX.Element {
+  const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,10 +28,18 @@ export function SideNav(): JSX.Element {
   const logoutPopover = (
     <Popover>
       <PopoverTrigger>
-        <Box cursor={"pointer"}>
-          <Text>{currentUser?.name}</Text>
-          <Text color={"gray.400"}>{currentUser?.username}</Text>
-        </Box>
+        <Flex
+          align={"center"}
+          gridGap={1}
+          fontWeight={"medium"}
+          fontSize={"1.2rem"}
+          cursor={"pointer"}
+        >
+          <IconoirMoreHorizCircledOutline />
+          <VStack gridGap={0}>
+            {!isSmallerThan748 ? <Text>More</Text> : null}
+          </VStack>
+        </Flex>
       </PopoverTrigger>
       <PopoverContent width={"max-content"}>
         <Button
@@ -47,7 +63,10 @@ export function SideNav(): JSX.Element {
         fontSize={"1.2rem"}
         onClick={() => navigate("/")}
       >
-        Home
+        <Flex align={"center"} gridGap={1}>
+          <IconoirHome />
+          {!isSmallerThan748 ? <Text>Home</Text> : null}
+        </Flex>
       </Box>
       <Box
         py={"1.2rem"}
@@ -63,7 +82,10 @@ export function SideNav(): JSX.Element {
           }
         }}
       >
-        Profile
+        <Flex align={"center"} gridGap={1}>
+          <IconoirProfileCircled />
+          {!isSmallerThan748 ? <Text>Profile</Text> : null}
+        </Flex>
       </Box>
       <Box color={"gray.600"} py={"1.2rem"}>
         {logged ? (

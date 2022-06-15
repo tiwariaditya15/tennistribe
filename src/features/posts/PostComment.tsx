@@ -10,7 +10,6 @@ import {
 import { useAddCommentMutation } from "../../app/services/posts";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useError } from "../../app/hooks/useError";
 import { useState } from "react";
 
 type PostCommentProps = {
@@ -89,7 +88,15 @@ export function PostComment({
             formik.handleSubmit();
           }}
         >
-          {isLoading ? <Spinner /> : "Comment"}
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              emptyColor={"gray.200"}
+              color={"blue.400"}
+            />
+          ) : (
+            "Comment"
+          )}
         </Button>
       </Flex>
     </Flex>

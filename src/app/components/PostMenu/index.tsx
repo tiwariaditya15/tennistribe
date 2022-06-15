@@ -51,7 +51,15 @@ export function PostMenu({ postId }: PostMenuProps): JSX.Element {
             }}
           >
             <AiFillDelete /> <Text>Delete Post</Text>{" "}
-            <Box color={"gray.500"}>{isLoading && <Spinner />}</Box>
+            <Box color={"gray.500"}>
+              {isLoading && (
+                <Spinner
+                  thickness="3px"
+                  emptyColor={"gray.200"}
+                  color={"blue.400"}
+                />
+              )}
+            </Box>
           </Flex>
         </PopoverBody>
       </PopoverContent>
