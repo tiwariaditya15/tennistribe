@@ -64,7 +64,6 @@ export const usersApi = createApi({
           username,
         },
       }),
-      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     unfollow: builder.mutation<FollowResponse, string>({
       query: (username) => ({
@@ -74,7 +73,6 @@ export const usersApi = createApi({
           username,
         },
       }),
-      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     getProfile: builder.query<ProfileResponse, string>({
       query: (username) => `profile/${username}`,
