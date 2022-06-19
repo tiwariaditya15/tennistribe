@@ -49,7 +49,7 @@ export function User({ user }: UserProps): JSX.Element {
     <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.800" }}>
       <GridItem
         colSpan={2}
-        onClick={() => navigate(`profile/${user.username}`)}
+        onClick={() => navigate(`/profile/${user.username}`)}
         cursor={"pointer"}
         my={"0.8rem"}
         mx={"0.4rem"}
