@@ -26,7 +26,6 @@ export function SideNav(): JSX.Element {
   const navigate = useNavigate();
   const logged = useAppSelector((state) => state.auth.logged);
   const currentUser = useAppSelector((state) => state.auth.currentUser);
-  console.log({ location });
   const logoutPopover = (
     <Popover>
       <PopoverTrigger>
@@ -49,6 +48,7 @@ export function SideNav(): JSX.Element {
             dispatch(logout());
             navigate("/");
           }}
+          color={"black"}
         >
           Logout
         </Button>

@@ -63,7 +63,7 @@ export function PostComment({
       borderColor={"gray.700"}
       px={"0.4rem"}
       py={"0.4rem"}
-      color={"gray.600"}
+      color={"gray.400"}
     >
       <Box>
         <Input

@@ -50,7 +50,13 @@ export function CreatePost(): JSX.Element {
     },
   });
   return (
-    <Box borderBottom={"1px"} borderColor={"gray.700"} py={"1rem"} px="1.5rem">
+    <Box
+      color={"gray.400"}
+      borderBottom={"1px"}
+      borderColor={"gray.700"}
+      py={"1rem"}
+      px="1.5rem"
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

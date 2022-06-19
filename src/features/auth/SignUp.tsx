@@ -67,7 +67,7 @@ export function SignUp(): JSX.Element {
       width={width}
     >
       <Box mt="0.6rem">
-        <FormControl id="name" color={"gray.700"} isRequired>
+        <FormControl id="name" color={"gray.400"} isRequired>
           <Input
             type="text"
             id="name"
@@ -80,7 +80,7 @@ export function SignUp(): JSX.Element {
         </FormControl>
       </Box>
       <Box mt="0.6rem">
-        <FormControl id="email" color={"gray.700"} isRequired>
+        <FormControl id="email" color={"gray.400"} isRequired>
           <Input
             type="text"
             id="email"
@@ -93,7 +93,7 @@ export function SignUp(): JSX.Element {
         </FormControl>
       </Box>
       <Box mt="0.6rem">
-        <FormControl id="username" color={"gray.700"} isRequired>
+        <FormControl id="username" color={"gray.400"} isRequired>
           <Input
             type="text"
             id="username"
@@ -109,7 +109,7 @@ export function SignUp(): JSX.Element {
       </Box>
       <Box mt="0.6rem">
         <Box pos={"relative"}>
-          <FormControl id="Password" color={"gray.700"} isRequired>
+          <FormControl id="Password" color={"gray.400"} isRequired>
             <Input
               type={hidden ? "password" : "text"}
               id="password"
@@ -155,7 +155,7 @@ export function SignUp(): JSX.Element {
       </Box>
       <Box mt="1rem">
         <Text color="twitter.400">
-          <span style={{ color: "black" }}>Already have an account?</span>
+          <span style={{ color: "#718096" }}>Already have an account?</span>
           &nbsp;&nbsp;
           <NavLink to="/signin">SignIn</NavLink>
         </Text>
