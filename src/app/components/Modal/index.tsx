@@ -36,8 +36,10 @@ export function Modal({
       }}
     >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader textTransform={"capitalize"}>{list}</ModalHeader>
+      <ModalContent bgColor={"gray.900"}>
+        <ModalHeader textTransform={"capitalize"} color={"gray.400"}>
+          {list}
+        </ModalHeader>
         <ModalBody>{children}</ModalBody>
       </ModalContent>
     </ChakraModal>
