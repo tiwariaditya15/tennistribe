@@ -20,7 +20,7 @@ type ProfileResponse = {
 // https://tennistribeApi.tiwariaditya.repl.co/users
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/users",
+  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/users",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
