@@ -4,6 +4,7 @@ import { Post as PostType } from "../../services/posts";
 import { useAppSelector } from "../../hooks";
 import { useState } from "react";
 import { IconoirStarOutline, MaterialSymbolsTrendingUpRounded } from "../icons";
+import { sortByLatestPosts, sortByTopPosts } from "../../utilities";
 
 type PostsProps = {
   posts?: PostType[];
@@ -20,7 +21,12 @@ export function Posts({ posts }: PostsProps): JSX.Element {
         {logged ? <Text>No posts!</Text> : <Text>SignIn to explore</Text>}
       </Flex>
     );
-  const sorted = sort === "" ? posts : posts;
+  const sorted =
+    sort === ""
+      ? posts
+      : sort === "NEW"
+      ? sortByLatestPosts(posts)
+      : sortByTopPosts(posts);
   return (
     <>
       <Grid
