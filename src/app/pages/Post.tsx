@@ -37,7 +37,7 @@ export function Post(): JSX.Element {
           py={"0.8rem"}
           color={"gray.400"}
           borderBottom={"1px"}
-          borderColor={"gray.100"}
+          borderColor={"gray.700"}
         >
           Pheww! No Comments!
         </Flex>

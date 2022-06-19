@@ -1,9 +1,9 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
 import { Post } from "./Post";
 import { Post as PostType } from "../../services/posts";
 import { useAppSelector } from "../../hooks";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { IconoirStarOutline, MaterialSymbolsTrendingUpRounded } from "../icons";
 
 type PostsProps = {
   posts?: PostType[];
@@ -12,6 +12,7 @@ type PostsProps = {
 export function Posts({ posts }: PostsProps): JSX.Element {
   const logged = useAppSelector((state) => state.auth.logged);
   const [commenting, setCommenting] = useState<string>("");
+  const [sort, setSort] = useState<"NEW" | "TOP" | "">("");
 
   if (!posts)
     return (
@@ -19,9 +20,47 @@ export function Posts({ posts }: PostsProps): JSX.Element {
         {logged ? <Text>No posts!</Text> : <Text>SignIn to explore</Text>}
       </Flex>
     );
+  const sorted = sort === "" ? posts : posts;
   return (
     <>
-      {posts.map((post) => (
+      <Grid
+        templateColumns={"repeat(2, 1fr)"}
+        color={"gray.500"}
+        borderBottom={"1px"}
+        borderColor={"gray.700"}
+      >
+        <GridItem mx={"auto"}>
+          <Button
+            onClick={() => {
+              setSort("TOP");
+            }}
+            color={sort === "TOP" ? "blue.300" : "inherit"}
+            fontWeight={sort === "TOP" ? "800" : "inherit"}
+            variant={"unstyled"}
+          >
+            <HStack>
+              <MaterialSymbolsTrendingUpRounded />
+              <Text>Top</Text>
+            </HStack>
+          </Button>
+        </GridItem>
+        <GridItem mx={"auto"}>
+          <Button
+            onClick={() => {
+              setSort("NEW");
+            }}
+            color={sort === "NEW" ? "blue.300" : "inherit"}
+            fontWeight={sort === "NEW" ? "800" : "inherit"}
+            variant={"unstyled"}
+          >
+            <HStack>
+              <IconoirStarOutline />
+              <Text>New</Text>
+            </HStack>
+          </Button>
+        </GridItem>
+      </Grid>
+      {sorted.map((post) => (
         <Post
           post={post}
           commenting={commenting}

@@ -52,20 +52,20 @@ export function Profile(): JSX.Element {
           px={"1rem"}
           py={"2rem"}
           borderBottom={"1px"}
-          borderColor={"gray.100"}
+          borderColor={"gray.700"}
         >
           <Avatar size={"xl"} />
           <Box my={"1rem"}>
-            <Text>{data?.["user"]["name"]}</Text>
-            <Text color={"gray.400"}>@{data?.["user"]["username"]}</Text>
+            <Text color={"gray.400"}>{data?.["user"]["name"]}</Text>
+            <Text color={"gray.600"}>@{data?.["user"]["username"]}</Text>
           </Box>
           <Flex gridGap={4} color={"gray.500"}>
             <Text
               borderBottom={"1px"}
-              borderColor={"white"}
+              borderColor={"gray.600"}
               _hover={{
                 borderBottom: "1px",
-                borderColor: "gray.500",
+                borderColor: "white",
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -77,10 +77,10 @@ export function Profile(): JSX.Element {
             </Text>
             <Text
               borderBottom={"1px"}
-              borderColor={"white"}
+              borderColor={"gray.600"}
               _hover={{
                 borderBottom: "1px",
-                borderColor: "gray.500",
+                borderColor: "white",
                 cursor: "pointer",
               }}
               onClick={() => {

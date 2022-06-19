@@ -20,7 +20,7 @@ type ProfileResponse = {
 // https://tennistribeApi.tiwariaditya.repl.co/users
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/users",
+  baseUrl: "http://localhost:8000/users",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -64,6 +64,7 @@ export const usersApi = createApi({
           username,
         },
       }),
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     unfollow: builder.mutation<FollowResponse, string>({
       query: (username) => ({
@@ -73,6 +74,7 @@ export const usersApi = createApi({
           username,
         },
       }),
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     getProfile: builder.query<ProfileResponse, string>({
       query: (username) => `profile/${username}`,

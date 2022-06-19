@@ -24,10 +24,11 @@ export function Navbar(): JSX.Element {
       justify={"space-between"}
       align={"center"}
       color={"twitter.400"}
+      bgColor={"black"}
       fontSize={"1.6rem"}
       p={"1rem"}
-      border="1px"
-      borderColor={"gray.100"}
+      borderBottom="1px"
+      borderColor={"gray.700"}
     >
       <Text fontWeight={"600"}>
         <NavLink to="/">TennisTribe</NavLink>

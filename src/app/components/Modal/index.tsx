@@ -38,7 +38,6 @@ export function Modal({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textTransform={"capitalize"}>{list}</ModalHeader>
-        <ModalCloseButton />
         <ModalBody>{children}</ModalBody>
       </ModalContent>
     </ChakraModal>

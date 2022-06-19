@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Post, Profile } from "../../app/pages";
+import { Explore, Home, Post, Profile } from "../../app/pages";
 import PrivateRoute from "./PrivateRoute";
 
 import { SignIn } from "./SignIn";
@@ -10,6 +10,7 @@ export function Router() {
       <Route path="/" element={<Home />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/explore" element={<Explore />} />
       <Route
         path="/post/:postId"
         element={

@@ -47,17 +47,17 @@ export function Comment({ comment }: CommentProps): JSX.Element {
     <Flex
       flexDirection={"column"}
       borderBottom={"1px"}
-      borderColor={"gray.100"}
+      borderColor={"gray.700"}
     >
       <Flex px={"0.5rem"} py={"0.4rem"} color={"gray.600"}>
-        <Text>{comment.author.name}</Text>
-        <Text color={"gray.400"}>@{comment.author.username}</Text>
+        <Text color={"gray.400"}>{comment.author.name}</Text>
+        <Text color={"gray.600"}>@{comment.author.username}</Text>
       </Flex>
       <Flex
         justify={"space-between"}
         px={"0.5rem"}
         py={"0.4rem"}
-        color={"gray.600"}
+        color={"gray.400"}
       >
         <Text>{comment.comment}</Text>
         {deleteIcon}

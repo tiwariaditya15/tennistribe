@@ -65,7 +65,7 @@ type ToggleReactionResponse = {
 // https://tennistribeApi.tiwariaditya.repl.co
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co",
+  baseUrl: "http://localhost:8000",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -84,6 +84,16 @@ export const postsApi = createApi({
   endpoints: (builder) => ({
     getFeed: builder.query<PostsReponse, void>({
       query: () => "posts",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.posts.map(({ id }) => ({ type: "Posts", id } as const)),
+              { type: "Posts", id: "LIST" },
+            ]
+          : [{ type: "Posts", id: "LIST" }],
+    }),
+    getExploreFeed: builder.query<PostsReponse, void>({
+      query: () => "posts/explore",
       providesTags: (result) =>
         result
           ? [
@@ -155,4 +165,5 @@ export const {
   useRemoveCommentMutation,
   useRemovePostMutation,
   useToggleReactionMutation,
+  useGetExploreFeedQuery,
 } = postsApi;

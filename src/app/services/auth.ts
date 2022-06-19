@@ -42,7 +42,7 @@ type TokenValidattion = {
 // https://tennistribeApi.tiwariaditya.repl.co/accounts
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
+  baseUrl: "http://localhost:8000/accounts",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {

@@ -60,7 +60,7 @@ export function PostComment({
     <Flex
       flexDirection={"column"}
       borderBottom={"1px"}
-      borderColor={"gray.100"}
+      borderColor={"gray.700"}
       px={"0.4rem"}
       py={"0.4rem"}
       color={"gray.600"}

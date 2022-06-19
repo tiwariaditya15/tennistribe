@@ -46,7 +46,7 @@ export function User({ user }: UserProps): JSX.Element {
     (entry) => entry.username === user.username
   );
   return (
-    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.50" }}>
+    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.800" }}>
       <GridItem
         colSpan={2}
         onClick={() => navigate(`profile/${user.username}`)}
@@ -54,8 +54,8 @@ export function User({ user }: UserProps): JSX.Element {
         my={"0.8rem"}
         mx={"0.4rem"}
       >
-        <Box color={"gray.600"}>{user.name}</Box>
-        <Box color={"gray.400"}>@{user.username}</Box>
+        <Box color={"gray.400"}>{user.name}</Box>
+        <Box color={"gray.600"}>@{user.username}</Box>
       </GridItem>
       <GridItem my={"0.8rem"} mx={"0.4rem"}>
         {loggedUserFollows ? (

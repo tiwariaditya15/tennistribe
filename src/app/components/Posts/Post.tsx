@@ -44,7 +44,7 @@ export function Post({
       <Flex
         flexDirection={"column"}
         borderBottom={"1px"}
-        borderColor={"gray.100"}
+        borderColor={"gray.700"}
         px={"0.4rem"}
         py="0.4rem"
         onClick={() => navigate(`/post/${post.id}`)}
@@ -53,13 +53,13 @@ export function Post({
         {/* card-header */}
         <Flex justify={"space-between"}>
           <Flex>
-            <Box color={"gray.600"} pr="0.2rem">
+            <Box color={"gray.400"} pr="0.2rem">
               {post.author.name}
             </Box>
-            <Box color={"gray.400"} pr="0.2rem">
+            <Box color={"gray.600"} pr="0.2rem">
               @{post.author.username}
             </Box>
-            <Box color={"gray.400"}>&middot;{date} ago</Box>
+            <Box color={"gray.600"}>&middot;{date} ago</Box>
           </Flex>
           <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
             {post.author.email === currentUserEmail && (
@@ -68,7 +68,7 @@ export function Post({
           </Box>
         </Flex>
         {/* card-content */}
-        <Flex py="0.5rem" color={"gray.600"}>
+        <Flex py="0.5rem" color={"gray.400"}>
           {post.content}
         </Flex>
         {/* card-actions */}
