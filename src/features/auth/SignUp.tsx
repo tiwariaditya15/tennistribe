@@ -126,7 +126,7 @@ export function SignUp(): JSX.Element {
             color={"gray.500"}
             pos={"absolute"}
             top={"10px"}
-            left={"12rem"}
+            left={"10rem"}
             fontSize={"0.8rem"}
             cursor={"pointer"}
             onClick={() => setHidden((hidden) => !hidden)}
