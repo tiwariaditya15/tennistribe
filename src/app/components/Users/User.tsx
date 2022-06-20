@@ -1,5 +1,14 @@
 import { User as UserType } from "../../services/auth";
-import { Box, Grid, GridItem, Button, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Button,
+  Spinner,
+  Text,
+  Flex,
+  Avatar,
+} from "@chakra-ui/react";
 import { useFollowMutation, useUnfollowMutation } from "../../services/users";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useState } from "react";
@@ -46,7 +55,7 @@ export function User({ user }: UserProps): JSX.Element {
     (entry) => entry.username === user.username
   );
   return (
-    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.800" }}>
+    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.900" }}>
       <GridItem
         colSpan={2}
         onClick={() => navigate(`/profile/${user.username}`)}
@@ -54,8 +63,22 @@ export function User({ user }: UserProps): JSX.Element {
         my={"0.8rem"}
         mx={"0.4rem"}
       >
-        <Box color={"gray.400"}>{user.name}</Box>
-        <Box color={"gray.600"}>@{user.username}</Box>
+        <Flex gridGap={2} align={"center"}>
+          <Avatar size={"sm"} />
+          <Box>
+            <Box
+              borderBottom={"1px"}
+              borderColor={"gray.900"}
+              _hover={{
+                borderColor: "gray.400",
+              }}
+              color={"gray.400"}
+            >
+              {user.name}
+            </Box>
+            <Box color={"gray.600"}>@{user.username}</Box>
+          </Box>
+        </Flex>
       </GridItem>
       <GridItem my={"0.8rem"} mx={"0.4rem"}>
         {loggedUserFollows ? (

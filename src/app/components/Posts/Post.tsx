@@ -2,7 +2,7 @@ import {
   Post as PostType,
   useToggleReactionMutation,
 } from "../../services/posts";
-import { Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -55,17 +55,21 @@ export function Post({
         py="0.4rem"
         onClick={() => navigate(`/post/${post.id}`)}
         cursor={"pointer"}
+        _hover={{
+          bgColor: "gray.900",
+        }}
       >
         {/* card-header */}
         <Flex justify={"space-between"}>
-          <Flex>
+          <Flex align={"center"} gridGap={1} p={"0.5rem"}>
+            <Avatar size={"sm"} />
             <Box color={"gray.400"} pr="0.2rem">
               {post.author.name}
             </Box>
             <Box color={"gray.600"} pr="0.2rem">
               @{post.author.username}
             </Box>
-            <Box color={"gray.600"}>&middot;{date} ago</Box>
+            <Box color={"gray.600"}>&middot;&nbsp;{date} ago</Box>
           </Flex>
           <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
             {post.author.email === currentUserEmail && (
@@ -74,7 +78,7 @@ export function Post({
           </Box>
         </Flex>
         {/* card-content */}
-        <Flex py="0.5rem" color={"gray.400"}>
+        <Flex p={"0.5rem"} py="0.5rem" color={"gray.400"}>
           {post.content}
         </Flex>
         {/* card-actions */}
@@ -85,6 +89,7 @@ export function Post({
           alignItems={"center"}
           templateColumns={"repeat(3, 1fr)"}
           w={"40%"}
+          p={"0.5rem"}
         >
           <GridItem
             cursor={"pointer"}
