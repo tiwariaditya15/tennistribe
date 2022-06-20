@@ -4,7 +4,15 @@ import { isAfter } from "date-fns";
 
 export const sortByTopPosts = (posts: Post[]): Post[] => {
   const sorted = [...posts];
-  return sorted.sort((one, two) => one.reactions - two.reactions);
+  return sorted.sort((one, two) => {
+    if (one.likedBy.length > two.likedBy.length) {
+      return -1;
+    }
+    if (one.likedBy.length < two.likedBy.length) {
+      return 1;
+    }
+    return 0;
+  });
 };
 
 export const sortByLatestPosts = (posts: Post[]): Post[] => {
