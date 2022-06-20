@@ -2,7 +2,7 @@ import {
   Post as PostType,
   useToggleReactionMutation,
 } from "../../services/posts";
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -11,6 +11,7 @@ import { PostComment } from "../../../features/posts/PostComment";
 import { useToggle } from "../../hooks/useToggle";
 import { useNavigate } from "react-router-dom";
 import { PostMenu } from "../PostMenu";
+import { MaterialSymbolsBookmark } from "../icons";
 
 type PostProps = {
   post: PostType;
@@ -32,8 +33,13 @@ export function Post({
   const [toggleReaction, { isLoading: isReacting }] =
     useToggleReactionMutation();
   const date = formatDistanceToNow(new Date(post.timestamp));
-  const icon = isReacting ? (
-    <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
+  const heartIcon = isReacting ? (
+    <Spinner
+      thickness="3px"
+      emptyColor={"gray.200"}
+      color={"blue.400"}
+      size={"sm"}
+    />
   ) : post.likedBy.some((user) => user.email === currentUserEmail) ? (
     <AiFillHeart />
   ) : (
@@ -72,13 +78,15 @@ export function Post({
           {post.content}
         </Flex>
         {/* card-actions */}
-        <Flex
+        <Grid
           py={"0.5rem"}
           fontSize={"1.5rem"}
           pl={"0.4rem"}
           alignItems={"center"}
+          templateColumns={"repeat(3, 1fr)"}
+          w={"40%"}
         >
-          <Box
+          <GridItem
             cursor={"pointer"}
             color={"gray.500"}
             display={"flex"}
@@ -95,16 +103,14 @@ export function Post({
                 } catch (error: any) {}
               }}
             >
-              {icon}
+              {heartIcon}
             </Box>
             <Box fontSize={"smaller"}>
               {post.likedBy.length && post.likedBy.length}
             </Box>
-          </Box>
-          <Flex alignItems={"center"} gridGap={1}>
+          </GridItem>
+          <GridItem display={"flex"} alignItems={"center"} gridGap={1}>
             <Box
-              pl="3rem"
-              pr={"0.4rem"}
               cursor={"pointer"}
               color={"gray.500"}
               onClick={(e) => {
@@ -116,10 +122,13 @@ export function Post({
               <BiCommentDetail />
             </Box>
             <span style={{ fontSize: "1rem", color: "gray" }}>
-              {post.comments.length ? post.comments.length : null}
+              {post.comments.length ? post.comments.length : "0"}
             </span>
-          </Flex>
-        </Flex>
+          </GridItem>
+          <GridItem onClick={(e) => e.stopPropagation()}>
+            <MaterialSymbolsBookmark color="var(--gray-600)" />
+          </GridItem>
+        </Grid>
       </Flex>
       {commenting === post.id && toggle && (
         <PostComment
