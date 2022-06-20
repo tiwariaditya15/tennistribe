@@ -1,5 +1,39 @@
 import { SVGProps } from "react";
 
+export function MaterialSymbolsBookmarkOutline(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="m7 17.95l5-2.15l5 2.15V5H7ZM5 21V5q0-.825.588-1.413Q6.175 3 7 3h10q.825 0 1.413.587Q19 4.175 19 5v16l-7-3ZM17 5H7h10Z"
+      ></path>
+    </svg>
+  );
+}
+export function MaterialSymbolsBookmark(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M5 21V5q0-.825.588-1.413Q6.175 3 7 3h10q.825 0 1.413.587Q19 4.175 19 5v16l-7-3Z"
+      ></path>
+    </svg>
+  );
+}
 export function IconoirStarOutline(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
