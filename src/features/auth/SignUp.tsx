@@ -155,7 +155,9 @@ export function SignUp(): JSX.Element {
       </Box>
       <Box mt="1rem">
         <Text color="twitter.400">
-          <span style={{ color: "#718096" }}>Already have an account?</span>
+          <span style={{ color: "var(--gray-500)" }}>
+            Already have an account?
+          </span>
           &nbsp;&nbsp;
           <NavLink to="/signin">SignIn</NavLink>
         </Text>

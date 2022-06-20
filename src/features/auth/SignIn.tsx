@@ -137,7 +137,9 @@ export function SignIn(): JSX.Element {
       </Box>
       <Box mt="0.8rem">
         <Text color="twitter.400">
-          <span style={{ color: "#718096" }}>Don't have an account?</span>
+          <span style={{ color: "var(--gray-500)" }}>
+            Don't have an account?
+          </span>
           &nbsp;&nbsp;
           <NavLink to="/signup">SignUp</NavLink>
         </Text>
