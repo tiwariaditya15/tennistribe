@@ -17,7 +17,7 @@ type ProfileResponse = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process["env"]["REACT_APP_ENDPOINT"],
+  baseUrl: `${import.meta.env["VITE_ENDPOINT"] as string}/users`,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
