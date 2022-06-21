@@ -33,6 +33,7 @@ export type Post = {
   author: Author;
   comments: Comment[];
   likedBy: User[];
+  bookmarkedBy: User[];
 };
 
 type PostsReponse = {
@@ -102,6 +103,16 @@ export const postsApi = createApi({
             ]
           : [{ type: "Posts", id: "LIST" }],
     }),
+    getBookmarksFeed: builder.query<PostsReponse, void>({
+      query: () => "posts/bookmarks",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.posts.map(({ id }) => ({ type: "Posts", id } as const)),
+              { type: "Posts", id: "LIST" },
+            ]
+          : [{ type: "Posts", id: "LIST" }],
+    }),
     getPost: builder.query<PostResponse, string>({
       query: (postId) => `posts/${postId}`,
       providesTags: (result) => [{ type: "Posts", id: result?.post.id }],
@@ -154,6 +165,18 @@ export const postsApi = createApi({
         { type: "Posts", id: result?.postId },
       ],
     }),
+    toggleBookmark: builder.mutation<ToggleReactionResponse, string>({
+      query: (postId) => ({
+        url: "posts/bookmark",
+        method: "POST",
+        body: {
+          postId,
+        },
+      }),
+      invalidatesTags: (result, error) => [
+        { type: "Posts", id: result?.postId },
+      ],
+    }),
   }),
 });
 
@@ -166,4 +189,6 @@ export const {
   useRemovePostMutation,
   useToggleReactionMutation,
   useGetExploreFeedQuery,
+  useToggleBookmarkMutation,
+  useGetBookmarksFeedQuery,
 } = postsApi;

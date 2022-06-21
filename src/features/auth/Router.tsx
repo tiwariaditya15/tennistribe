@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Explore, Home, Post, Profile } from "../../app/pages";
+import { Bookmarks } from "../../app/pages/";
 import PrivateRoute from "./PrivateRoute";
 
 import { SignIn } from "./SignIn";
@@ -24,6 +25,14 @@ export function Router() {
         element={
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/bookmarks"
+        element={
+          <PrivateRoute>
+            <Bookmarks />
           </PrivateRoute>
         }
       />

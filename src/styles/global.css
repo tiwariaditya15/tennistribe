@@ -4,3 +4,7 @@
   --gray-700: #2d3748;
   --blue-300: #63b3ed;
 }
+
+html {
+  background-color: black;
+}

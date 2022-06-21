@@ -86,7 +86,7 @@ export function CreatePost(): JSX.Element {
             alignItems={"center"}
           >
             <FormLabel htmlFor="img" cursor={"pointer"}>
-              <BsImage />
+              {/* <BsImage /> */}
             </FormLabel>
             <Input
               type={"file"}

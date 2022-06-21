@@ -1,8 +1,17 @@
 import {
   Post as PostType,
+  useToggleBookmarkMutation,
   useToggleReactionMutation,
 } from "../../services/posts";
-import { Avatar, Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -11,7 +20,10 @@ import { PostComment } from "../../../features/posts/PostComment";
 import { useToggle } from "../../hooks/useToggle";
 import { useNavigate } from "react-router-dom";
 import { PostMenu } from "../PostMenu";
-import { MaterialSymbolsBookmark } from "../icons";
+import {
+  MaterialSymbolsBookmark,
+  MaterialSymbolsBookmarkOutline,
+} from "../icons";
 
 type PostProps = {
   post: PostType;
@@ -24,6 +36,7 @@ export function Post({
   commenting,
   setCommenting,
 }: PostProps): JSX.Element {
+  const toast = useToast();
   const navigate = useNavigate();
   const { setToggle, toggle } = useToggle();
   const currentUserEmail = useAppSelector(
@@ -32,6 +45,8 @@ export function Post({
 
   const [toggleReaction, { isLoading: isReacting }] =
     useToggleReactionMutation();
+  const [toggleBookmark, { isLoading: isBookmarking }] =
+    useToggleBookmarkMutation();
   const date = formatDistanceToNow(new Date(post.timestamp));
   const heartIcon = isReacting ? (
     <Spinner
@@ -130,8 +145,37 @@ export function Post({
               {post.comments.length ? post.comments.length : "0"}
             </span>
           </GridItem>
-          <GridItem onClick={(e) => e.stopPropagation()}>
-            <MaterialSymbolsBookmark color="var(--gray-600)" />
+          <GridItem
+            onClick={async (e) => {
+              e.stopPropagation();
+              if (isBookmarking) {
+                return;
+              }
+              try {
+                await toggleBookmark(post.id);
+                toast({
+                  status: "success",
+                  position: "bottom-right",
+                  description: "Bookmarked",
+                  isClosable: true,
+                });
+              } catch (error) {
+                toast({
+                  status: "error",
+                  position: "bottom-right",
+                  description: "Couldn't bookmark",
+                  isClosable: true,
+                });
+              }
+            }}
+          >
+            {post.bookmarkedBy.some(
+              (user) => user.email === currentUserEmail
+            ) ? (
+              <MaterialSymbolsBookmark color="var(--gray-600)" />
+            ) : (
+              <MaterialSymbolsBookmarkOutline color="var(--gray-600)" />
+            )}
           </GridItem>
         </Grid>
       </Flex>

@@ -17,6 +17,7 @@ import {
   IconoirMoreHorizCircledOutline,
   IconoirProfileCircled,
   IcOutlineExplore,
+  MaterialSymbolsBookmarkOutline,
 } from "../../app/components/icons";
 
 export function SideNav(): JSX.Element {
@@ -56,7 +57,12 @@ export function SideNav(): JSX.Element {
     </Popover>
   );
   return (
-    <Flex flexDirection={"column"} h={"100%"} color={"gray.400"}>
+    <Flex
+      flexDirection={"column"}
+      h={"100%"}
+      color={"gray.400"}
+      alignItems={"flex-start"}
+    >
       <Box
         py={"1.2rem"}
         cursor={"pointer"}
@@ -68,6 +74,7 @@ export function SideNav(): JSX.Element {
           align={"center"}
           gridGap={1}
           color={location.pathname === "/" ? "blue.300" : "inherit"}
+          _hover={{ color: "blue.300" }}
         >
           <IconoirHome />
           {!isSmallerThan748 ? <Text>Home</Text> : null}
@@ -86,9 +93,35 @@ export function SideNav(): JSX.Element {
           align={"center"}
           gridGap={1}
           color={location.pathname.includes("explore") ? "blue.300" : "inherit"}
+          _hover={{ color: "blue.300" }}
         >
           <IcOutlineExplore />
           {!isSmallerThan748 ? <Text>Explore</Text> : null}
+        </Flex>
+      </Box>
+      <Box
+        py={"1.2rem"}
+        cursor={"pointer"}
+        fontWeight={"medium"}
+        fontSize={"1.2rem"}
+        onClick={() => {
+          if (currentUser) {
+            navigate(`/bookmarks`);
+          } else {
+            navigate("/");
+          }
+        }}
+      >
+        <Flex
+          align={"center"}
+          gridGap={1}
+          color={
+            location.pathname.includes("bookmarks") ? "blue.300" : "inherit"
+          }
+          _hover={{ color: "blue.300" }}
+        >
+          <MaterialSymbolsBookmarkOutline />
+          {!isSmallerThan748 ? <Text>Bookmarks</Text> : null}
         </Flex>
       </Box>
       <Box
@@ -108,6 +141,7 @@ export function SideNav(): JSX.Element {
           align={"center"}
           gridGap={1}
           color={location.pathname.includes("profile") ? "blue.300" : "inherit"}
+          _hover={{ color: "blue.300" }}
         >
           <IconoirProfileCircled />
           {!isSmallerThan748 ? <Text>Profile</Text> : null}
