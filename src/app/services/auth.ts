@@ -38,11 +38,8 @@ type TokenValidattion = {
   error?: JWTError;
 };
 
-// http://localhost:8000/accounts
-// https://tennistribeApi.tiwariaditya.repl.co/accounts
-
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://tennistribeApi.tiwariaditya.repl.co/accounts",
+  baseUrl: process["env"]["REACT_APP_ENDPOINT"],
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
