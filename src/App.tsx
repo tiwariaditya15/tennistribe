@@ -1,5 +1,5 @@
 import { useValidateTokenQuery } from "./app/services/auth";
-import { Router, Navbar } from "./features/auth/";
+import { Navbar, Router } from "./features/auth/";
 import { Grid, GridItem, useMediaQuery } from "@chakra-ui/react";
 import { SideNav } from "./features/auth/SideNav";
 import { Users } from "./app/components/Users";
@@ -18,8 +18,8 @@ function App() {
   return (
     <>
       <Navbar />
-      <Grid templateColumns={`repeat(4, 1fr)`} bgColor={"black"}>
-        <GridItem mx={"auto"} p={0}>
+      <Grid templateColumns={`repeat(4, 1fr)`} bgColor="black">
+        <GridItem p={0} mx={"auto"}>
           <SideNav />
         </GridItem>
         <GridItem

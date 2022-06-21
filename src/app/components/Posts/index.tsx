@@ -66,14 +66,20 @@ export function Posts({ posts }: PostsProps): JSX.Element {
           </Button>
         </GridItem>
       </Grid>
-      {sorted.map((post) => (
-        <Post
-          post={post}
-          commenting={commenting}
-          setCommenting={setCommenting}
-          key={post.id}
-        />
-      ))}
+      {sorted.length ? (
+        sorted.map((post) => (
+          <Post
+            post={post}
+            commenting={commenting}
+            setCommenting={setCommenting}
+            key={post.id}
+          />
+        ))
+      ) : (
+        <Text textAlign={"center"} color={"gray.400"} mt={"1rem"}>
+          No posts!
+        </Text>
+      )}
     </>
   );
 }
