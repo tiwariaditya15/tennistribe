@@ -152,11 +152,11 @@ export function Post({
                 return;
               }
               try {
-                await toggleBookmark(post.id);
+                const res = await toggleBookmark(post.id).unwrap();
                 toast({
                   status: "success",
                   position: "bottom-right",
-                  description: "Bookmarked",
+                  description: res.message,
                   isClosable: true,
                 });
               } catch (error) {

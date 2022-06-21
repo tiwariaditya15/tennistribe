@@ -23,6 +23,7 @@ export function Comment({ comment }: CommentProps): JSX.Element {
         title: "Deleted!",
         duration: 6000,
         isClosable: true,
+        position: "bottom-right",
       });
     } catch (error) {}
   };
@@ -37,7 +38,12 @@ export function Comment({ comment }: CommentProps): JSX.Element {
         }}
       >
         {isLoading ? (
-          <Spinner thickness="3px" emptyColor={"gray.200"} color={"blue.400"} />
+          <Spinner
+            thickness="3px"
+            emptyColor={"gray.200"}
+            color={"blue.400"}
+            size={"sm"}
+          />
         ) : (
           <AiFillDelete />
         )}

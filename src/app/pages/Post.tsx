@@ -8,9 +8,7 @@ import { useGetPostQuery } from "../services/posts";
 export function Post(): JSX.Element {
   const [commenting, setCommenting] = useState<string>("");
   const { postId } = useParams();
-  const { data, isLoading } = useGetPostQuery(postId!, {
-    pollingInterval: 3000,
-  });
+  const { data, isLoading } = useGetPostQuery(postId!, {});
 
   if (isLoading)
     return (

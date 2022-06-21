@@ -50,6 +50,7 @@ export function PostComment({
           status: "success",
           duration: 6000,
           isClosable: true,
+          position: "bottom-right",
         });
       } catch (error: any) {
         setError(error.data.error);
@@ -85,6 +86,7 @@ export function PostComment({
           borderRadius={"4rem"}
           colorScheme={"twitter"}
           onClick={() => {
+            if (isLoading) return;
             formik.handleSubmit();
           }}
         >
