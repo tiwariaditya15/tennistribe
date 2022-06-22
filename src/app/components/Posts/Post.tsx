@@ -10,6 +10,8 @@ import {
   Grid,
   GridItem,
   Spinner,
+  Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -24,6 +26,8 @@ import {
   MaterialSymbolsBookmark,
   MaterialSymbolsBookmarkOutline,
 } from "../icons";
+import { LikedListModal } from "./LikedListModal";
+import { User } from "../Users/User";
 
 type PostProps = {
   post: PostType;
@@ -36,6 +40,7 @@ export function Post({
   commenting,
   setCommenting,
 }: PostProps): JSX.Element {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
   const { setToggle, toggle } = useToggle();
@@ -47,6 +52,7 @@ export function Post({
     useToggleReactionMutation();
   const [toggleBookmark, { isLoading: isBookmarking }] =
     useToggleBookmarkMutation();
+
   const date = formatDistanceToNow(new Date(post.timestamp));
   const heartIcon = isReacting ? (
     <Spinner
@@ -59,6 +65,13 @@ export function Post({
     <AiFillHeart />
   ) : (
     <AiOutlineHeart />
+  );
+  const usersList = post.likedBy.length ? (
+    post.likedBy.map((user) => <User user={user} key={user.username} />)
+  ) : (
+    <Text color={"gray.400"} textAlign={"center"} py={"1rem"}>
+      No likes!
+    </Text>
   );
   return (
     <>
@@ -125,9 +138,19 @@ export function Post({
             >
               {heartIcon}
             </Box>
-            <Box fontSize={"smaller"}>
+
+            <Text
+              fontSize={"smaller"}
+              _hover={{
+                color: "gray.400",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen();
+              }}
+            >
               {post.likedBy.length && post.likedBy.length}
-            </Box>
+            </Text>
           </GridItem>
           <GridItem display={"flex"} alignItems={"center"} gridGap={1}>
             <Box
@@ -186,6 +209,11 @@ export function Post({
           setToggle={setToggle}
         />
       )}
+      {isOpen ? (
+        <LikedListModal isOpen={isOpen} onClose={onClose}>
+          {usersList}
+        </LikedListModal>
+      ) : null}
     </>
   );
 }
