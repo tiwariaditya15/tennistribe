@@ -31,7 +31,9 @@ export function Navbar(): JSX.Element {
       borderColor={"gray.700"}
     >
       <Text fontWeight={"600"}>
-        <NavLink to="/">TennisTribe</NavLink>
+        <NavLink to="/">
+          <em>TennisTribe</em>
+        </NavLink>
       </Text>
     </Flex>
   );

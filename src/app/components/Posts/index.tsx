@@ -17,8 +17,19 @@ export function Posts({ posts }: PostsProps): JSX.Element {
 
   if (!posts)
     return (
-      <Flex justify={"center"} mt={"1rem"} color={"gray.600"}>
-        {logged ? <Text>No posts!</Text> : <Text>SignIn to explore</Text>}
+      <Flex justify={"center"} mt={"1rem"} color={"gray.400"}>
+        {logged ? (
+          <Text>No posts!</Text>
+        ) : (
+          <Flex flexDir={"column"}>
+            <Text textAlign={"center"} fontWeight={"700"} fontSize={"4xl"}>
+              Join your tribe now.
+            </Text>
+            <Text textAlign={"center"}>
+              SignIn to learn and explore <em>tennis.</em>
+            </Text>
+          </Flex>
+        )}
       </Flex>
     );
   const sorted =
