@@ -40,10 +40,19 @@ export function SignUp(): JSX.Element {
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
-      name: yup.string().required("Enter name"),
-      email: yup.string().email().required("Enter email"),
-      username: yup.string().required("Enter username"),
-      password: yup.string().required("Enter password"),
+      name: yup
+        .string()
+        .required("Enter name")
+        .min(4, "Needs to be atleast 4 characters"),
+      email: yup.string().email("Not valid email").required("Enter email"),
+      username: yup
+        .string()
+        .required("Enter username")
+        .min(6, "Needs to be atleast 6 characters"),
+      password: yup
+        .string()
+        .required("Enter password")
+        .min(8, "Needs to be atleast 8 characters"),
     }),
     onSubmit: async (values) => {
       try {
@@ -66,7 +75,7 @@ export function SignUp(): JSX.Element {
       mx={"auto"}
       width={width}
     >
-      <Box mt="0.6rem">
+      <Box mt="1rem">
         <FormControl id="name" color={"gray.400"} isRequired>
           <Input
             type="text"
@@ -79,7 +88,7 @@ export function SignUp(): JSX.Element {
           </Text>
         </FormControl>
       </Box>
-      <Box mt="0.6rem">
+      <Box mt="1rem">
         <FormControl id="email" color={"gray.400"} isRequired>
           <Input
             type="text"
@@ -92,7 +101,7 @@ export function SignUp(): JSX.Element {
           </Text>
         </FormControl>
       </Box>
-      <Box mt="0.6rem">
+      <Box mt="1rem">
         <FormControl id="username" color={"gray.400"} isRequired>
           <Input
             type="text"
@@ -107,7 +116,7 @@ export function SignUp(): JSX.Element {
           </Text>
         </FormControl>
       </Box>
-      <Box mt="0.6rem">
+      <Box mt="1rem">
         <Box pos={"relative"}>
           <FormControl id="Password" color={"gray.400"} isRequired>
             <Input
