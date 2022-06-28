@@ -1,4 +1,5 @@
 import { Flex, Spinner } from "@chakra-ui/react";
+import { Helmet } from "react-helmet";
 import { Posts } from "../components/Posts";
 import { useGetBookmarksFeedQuery } from "../services/posts";
 
@@ -11,5 +12,12 @@ export function Bookmarks() {
       </Flex>
     );
   }
-  return <Posts posts={data?.posts} />;
+  return (
+    <>
+      <Helmet>
+        <title>Bookmarks / TennisTribe</title>
+      </Helmet>
+      <Posts posts={data?.posts} />;
+    </>
+  );
 }

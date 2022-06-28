@@ -1,4 +1,5 @@
 import { Flex, Spinner, Text } from "@chakra-ui/react";
+import { Helmet } from "react-helmet";
 import { Posts } from "../components/Posts";
 import { useGetExploreFeedQuery } from "../services/posts";
 
@@ -18,5 +19,12 @@ export function Explore(): JSX.Element {
       </Flex>
     );
   }
-  return <Posts posts={data?.["posts"]} />;
+  return (
+    <>
+      <Helmet>
+        <title>Explore / TennisTribe</title>
+      </Helmet>
+      <Posts posts={data?.["posts"]} />;
+    </>
+  );
 }

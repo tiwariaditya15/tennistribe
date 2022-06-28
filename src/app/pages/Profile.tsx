@@ -12,6 +12,7 @@ import { Posts } from "../../app/components/Posts";
 import { useState } from "react";
 import { Modal } from "../components/Modal";
 import { User } from "../components/Users/User";
+import { Helmet } from "react-helmet";
 
 export function Profile(): JSX.Element {
   const [list, setList] = useState<"following" | "followers" | "">("");
@@ -45,6 +46,9 @@ export function Profile(): JSX.Element {
 
   return (
     <>
+      <Helmet>
+        <title>Profile / TennisTribe</title>
+      </Helmet>
       <Box>
         <Flex
           flexDir={"column"}

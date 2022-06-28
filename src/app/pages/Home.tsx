@@ -3,6 +3,7 @@ import { Posts } from "../components/Posts";
 import { CreatePost } from "../../features/posts";
 import { useAppSelector } from "../hooks";
 import { useGetFeedQuery } from "../services/posts";
+import { Helmet } from "react-helmet";
 
 export function Home(): JSX.Element {
   const logged = useAppSelector((state) => state.auth.logged);
@@ -12,6 +13,9 @@ export function Home(): JSX.Element {
   });
   return (
     <>
+      <Helmet>
+        <title>Home / TennisTribe</title>
+      </Helmet>
       {logged ? <CreatePost /> : null}
       {isLoading ? (
         <Flex justify="center" mt="1rem">
