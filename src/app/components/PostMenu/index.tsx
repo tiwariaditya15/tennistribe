@@ -7,10 +7,11 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
-  Flex,
   Text,
   Spinner,
   Box,
+  useToast,
+  HStack,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
@@ -21,10 +22,17 @@ type PostMenuProps = {
 
 export function PostMenu({ postId }: PostMenuProps): JSX.Element {
   const navigate = useNavigate();
+  const toast = useToast();
   const [removePost, { isLoading, isError, error }] = useRemovePostMutation();
   const handleRemovePost = async () => {
     try {
       await removePost(postId).unwrap();
+      toast({
+        description: "Deleted post!",
+        position: "bottom-right",
+        isClosable: true,
+        status: "info",
+      });
       navigate("/");
     } catch (error: any) {}
   };
@@ -39,9 +47,9 @@ export function PostMenu({ postId }: PostMenuProps): JSX.Element {
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Menu</PopoverHeader>
+        <PopoverHeader color={"gray.600"}>Menu</PopoverHeader>
         <PopoverBody>
-          <Flex
+          <HStack
             color={"red.500"}
             alignItems={"center"}
             onClick={() => {
@@ -57,10 +65,11 @@ export function PostMenu({ postId }: PostMenuProps): JSX.Element {
                   thickness="3px"
                   emptyColor={"gray.200"}
                   color={"blue.400"}
+                  size={"sm"}
                 />
               )}
             </Box>
-          </Flex>
+          </HStack>
         </PopoverBody>
       </PopoverContent>
     </Popover>
