@@ -19,6 +19,7 @@ import {
   IcOutlineExplore,
   MaterialSymbolsBookmarkOutline,
 } from "../../app/components/icons";
+import { removeAllPosts } from "../posts/postsSlice";
 
 export function SideNav(): JSX.Element {
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
@@ -47,6 +48,7 @@ export function SideNav(): JSX.Element {
         <Button
           onClick={() => {
             dispatch(logout());
+            dispatch(removeAllPosts());
             navigate("/");
           }}
           color={"black"}
