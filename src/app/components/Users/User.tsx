@@ -83,6 +83,7 @@ export function User({ user }: UserProps): JSX.Element {
       <GridItem my={"0.8rem"} mx={"0.4rem"}>
         {loggedUserFollows ? (
           <Button
+            w={"100%"}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             _hover={{ bgColor: "red.600", color: "white" }}
@@ -98,7 +99,7 @@ export function User({ user }: UserProps): JSX.Element {
           </Button>
         ) : null}
         {!loggedUserFollows ? (
-          <Button onClick={handleFollowUnFollow}>
+          <Button w={"100%"} onClick={handleFollowUnFollow}>
             {isFollowing ? (
               <Spinner
                 thickness="3px"
