@@ -41,6 +41,7 @@ export function CreatePost(): JSX.Element {
           status: "success",
           duration: 6000,
           isClosable: true,
+          position: "bottom-right",
         });
         resetForm();
       } catch (error) {
