@@ -8,6 +8,7 @@ import {
   Text,
   Flex,
   Avatar,
+  useToast,
 } from "@chakra-ui/react";
 import { useFollowMutation, useUnfollowMutation } from "../../services/users";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -25,6 +26,7 @@ export function User({ user }: UserProps): JSX.Element {
   const navigate = useNavigate();
   const [follow, { isLoading: isFollowing }] = useFollowMutation();
   const [unfollow, { isLoading: isUnfollowing }] = useUnfollowMutation();
+  const toast = useToast();
 
   const following = useAppSelector(
     (state) => state.auth.currentUser?.following
@@ -37,6 +39,12 @@ export function User({ user }: UserProps): JSX.Element {
       if (following?.some((entry) => entry.username === user.username)) {
         await unfollow(user.username as string).unwrap();
         dispatch(removeFollower({ username: user.username as string }));
+        toast({
+          description: "Unfollowed!",
+          isClosable: true,
+          status: "info",
+          position: "bottom-right",
+        });
       } else {
         await follow(user.username as string).unwrap();
         dispatch(
@@ -46,6 +54,12 @@ export function User({ user }: UserProps): JSX.Element {
             email: user.email as string,
           })
         );
+        toast({
+          description: "Followed!",
+          isClosable: true,
+          status: "success",
+          position: "bottom-right",
+        });
       }
     } catch (error) {
       console.log({ error });
