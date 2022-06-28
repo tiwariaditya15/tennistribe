@@ -40,6 +40,7 @@ export function Post({
   commenting,
   setCommenting,
 }: PostProps): JSX.Element {
+  const logged = useAppSelector((state) => state.auth.logged);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
@@ -130,6 +131,15 @@ export function Post({
               color={"red.500"}
               onClick={async (e) => {
                 e.stopPropagation();
+                if (!logged) {
+                  toast({
+                    description: "Login required!",
+                    isClosable: true,
+                    status: "error",
+                    position: "bottom-right",
+                  });
+                  return;
+                }
                 if (isReacting) return;
                 try {
                   await toggleReaction(post.id).unwrap();
@@ -146,6 +156,15 @@ export function Post({
               }}
               onClick={(e) => {
                 e.stopPropagation();
+                if (!logged) {
+                  toast({
+                    description: "Login required!",
+                    isClosable: true,
+                    status: "error",
+                    position: "bottom-right",
+                  });
+                  return;
+                }
                 onOpen();
               }}
             >
@@ -158,6 +177,15 @@ export function Post({
               color={"gray.500"}
               onClick={(e) => {
                 e.stopPropagation();
+                if (!logged) {
+                  toast({
+                    description: "Login required!",
+                    isClosable: true,
+                    status: "error",
+                    position: "bottom-right",
+                  });
+                  return;
+                }
                 setToggle((curToggle) => !curToggle);
                 setCommenting(post.id);
               }}
@@ -171,6 +199,15 @@ export function Post({
           <GridItem
             onClick={async (e) => {
               e.stopPropagation();
+              if (!logged) {
+                toast({
+                  description: "Login required!",
+                  isClosable: true,
+                  status: "error",
+                  position: "bottom-right",
+                });
+                return;
+              }
               if (isBookmarking) {
                 return;
               }

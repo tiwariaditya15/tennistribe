@@ -91,7 +91,7 @@ export const postsApi = createApi({
           : [{ type: "Posts", id: "LIST" }],
     }),
     getExploreFeed: builder.query<PostsReponse, void>({
-      query: () => "posts/explore",
+      query: () => "/explore",
       providesTags: (result) =>
         result
           ? [
