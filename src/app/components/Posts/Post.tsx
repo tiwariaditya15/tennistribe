@@ -101,9 +101,9 @@ export function Post({
             <Box color={"gray.600"}>&middot;&nbsp;{date} ago</Box>
           </Flex>
           <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
-            {post.author.email === currentUserEmail && (
+            {logged && post.author.email === currentUserEmail ? (
               <PostMenu postId={post.id} />
-            )}
+            ) : null}
           </Box>
         </Flex>
         {/* card-content */}
