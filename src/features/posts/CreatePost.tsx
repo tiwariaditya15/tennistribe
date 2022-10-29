@@ -52,9 +52,9 @@ export function CreatePost(): JSX.Element {
   });
   return (
     <Box
-      color={"gray.400"}
+      color={"gray.600"}
       borderBottom={"1px"}
-      borderColor={"gray.700"}
+      borderColor={"gray.200"}
       py={"1rem"}
       px="1.5rem"
     >

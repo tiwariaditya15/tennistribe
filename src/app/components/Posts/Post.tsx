@@ -28,6 +28,7 @@ import {
 } from "../icons";
 import { LikedListModal } from "./LikedListModal";
 import { User } from "../Users/User";
+import { getToastProps } from "../../utilities";
 
 type PostProps = {
   post: PostType;
@@ -79,26 +80,26 @@ export function Post({
       <Flex
         flexDirection={"column"}
         borderBottom={"1px"}
-        borderColor={"gray.700"}
+        borderColor={"gray.200"}
         px={"0.4rem"}
         py="0.4rem"
         onClick={() => navigate(`/post/${post.id}`)}
         cursor={"pointer"}
         _hover={{
-          bgColor: "gray.900",
+          bgColor: "gray.100",
         }}
       >
         {/* card-header */}
         <Flex justify={"space-between"}>
           <Flex align={"center"} gridGap={1} p={"0.5rem"}>
             <Avatar size={"sm"} />
-            <Box color={"gray.400"} pr="0.2rem">
+            <Box color={"gray.600"} pr="0.2rem">
               {post.author.name}
             </Box>
-            <Box color={"gray.600"} pr="0.2rem">
+            <Box color={"gray.400"} pr="0.2rem">
               @{post.author.username}
             </Box>
-            <Box color={"gray.600"}>&middot;&nbsp;{date} ago</Box>
+            <Box color={"gray.400"}>&middot;&nbsp;{date} ago</Box>
           </Flex>
           <Box onClick={(e) => e.stopPropagation()} color={"gray.400"}>
             {logged && post.author.email === currentUserEmail ? (
@@ -107,7 +108,7 @@ export function Post({
           </Box>
         </Flex>
         {/* card-content */}
-        <Flex p={"0.5rem"} py="0.5rem" color={"gray.400"}>
+        <Flex p={"0.5rem"} py="0.5rem" color={"gray.600"}>
           {post.content}
         </Flex>
         {/* card-actions */}
@@ -132,12 +133,12 @@ export function Post({
               onClick={async (e) => {
                 e.stopPropagation();
                 if (!logged) {
-                  toast({
-                    description: "Login required!",
-                    isClosable: true,
-                    status: "error",
-                    position: "bottom-right",
-                  });
+                  toast(
+                    getToastProps({
+                      description: "Login required!",
+                      status: "error",
+                    })
+                  );
                   return;
                 }
                 if (isReacting) return;
@@ -157,12 +158,12 @@ export function Post({
               onClick={(e) => {
                 e.stopPropagation();
                 if (!logged) {
-                  toast({
-                    description: "Login required!",
-                    isClosable: true,
-                    status: "error",
-                    position: "bottom-right",
-                  });
+                  toast(
+                    getToastProps({
+                      description: "Login required!",
+                      status: "error",
+                    })
+                  );
                   return;
                 }
                 onOpen();
@@ -178,12 +179,12 @@ export function Post({
               onClick={(e) => {
                 e.stopPropagation();
                 if (!logged) {
-                  toast({
-                    description: "Login required!",
-                    isClosable: true,
-                    status: "error",
-                    position: "bottom-right",
-                  });
+                  toast(
+                    getToastProps({
+                      description: "Login required!",
+                      status: "error",
+                    })
+                  );
                   return;
                 }
                 setToggle((curToggle) => !curToggle);
@@ -200,12 +201,12 @@ export function Post({
             onClick={async (e) => {
               e.stopPropagation();
               if (!logged) {
-                toast({
-                  description: "Login required!",
-                  isClosable: true,
-                  status: "error",
-                  position: "bottom-right",
-                });
+                toast(
+                  getToastProps({
+                    description: "Login required!",
+                    status: "error",
+                  })
+                );
                 return;
               }
               if (isBookmarking) {
@@ -213,28 +214,25 @@ export function Post({
               }
               try {
                 const res = await toggleBookmark(post.id).unwrap();
-                toast({
-                  status: "success",
-                  position: "bottom-right",
-                  description: res.message,
-                  isClosable: true,
-                });
+                toast(
+                  getToastProps({ status: "success", description: res.message })
+                );
               } catch (error) {
-                toast({
-                  status: "error",
-                  position: "bottom-right",
-                  description: "Couldn't bookmark",
-                  isClosable: true,
-                });
+                toast(
+                  getToastProps({
+                    status: "error",
+                    description: "Couldn't bookmark",
+                  })
+                );
               }
             }}
           >
             {post.bookmarkedBy.some(
               (user) => user.email === currentUserEmail
             ) ? (
-              <MaterialSymbolsBookmark color="var(--gray-600)" />
+              <MaterialSymbolsBookmark color="var(--gray-500)" />
             ) : (
-              <MaterialSymbolsBookmarkOutline color="var(--gray-600)" />
+              <MaterialSymbolsBookmarkOutline color="var(--gray-500)" />
             )}
           </GridItem>
         </Grid>

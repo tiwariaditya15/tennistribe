@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Grid templateColumns={`repeat(4, 1fr)`} bgColor="black">
+      <Grid templateColumns={`repeat(4, 1fr)`}>
         <GridItem p={0} mx={"auto"}>
           <SideNav />
         </GridItem>
@@ -26,7 +26,7 @@ function App() {
           colSpan={isSmallerThan748 ? 3 : 2}
           borderLeft="1px"
           borderRight="1px"
-          borderColor="gray.700"
+          borderColor="gray.200"
           height={"100vh"}
           overflowX={"scroll"}
         >

@@ -31,6 +31,9 @@ export function User({ user }: UserProps): JSX.Element {
   const following = useAppSelector(
     (state) => state.auth.currentUser?.following
   );
+  const currentUser = useAppSelector(
+    (state) => state.auth.currentUser?.username
+  );
   const handleFollowUnFollow = async () => {
     if (isFollowing || isUnfollowing) {
       return;
@@ -64,6 +67,8 @@ export function User({ user }: UserProps): JSX.Element {
   const loggedUserFollows = following?.some(
     (entry) => entry.username === user.username
   );
+  const isCurrentUser = user.username === currentUser;
+
   return (
     <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.100" }}>
       <GridItem
@@ -77,16 +82,14 @@ export function User({ user }: UserProps): JSX.Element {
           <Avatar size={"sm"} />
           <Box>
             <Box
-              borderBottom={"1px"}
-              borderColor={"gray.900"}
               _hover={{
                 borderColor: "gray.400",
               }}
-              color={"gray.400"}
+              color={"gray.600"}
             >
               {user.name}
             </Box>
-            <Box color={"gray.600"}>@{user.username}</Box>
+            <Box color={"gray.400"}>@{user.username}</Box>
           </Box>
         </Flex>
       </GridItem>
@@ -98,6 +101,7 @@ export function User({ user }: UserProps): JSX.Element {
             onMouseLeave={() => setHovered(false)}
             _hover={{ bgColor: "red.600", color: "white" }}
             onClick={handleFollowUnFollow}
+            display={isCurrentUser ? "none" : "block"}
           >
             {hovered
               ? isUnfollowing
@@ -109,7 +113,11 @@ export function User({ user }: UserProps): JSX.Element {
           </Button>
         ) : null}
         {!loggedUserFollows ? (
-          <Button w={"100%"} onClick={handleFollowUnFollow}>
+          <Button
+            w={"100%"}
+            onClick={handleFollowUnFollow}
+            display={isCurrentUser ? "none" : "block"}
+          >
             {isFollowing ? (
               <Spinner
                 thickness="3px"

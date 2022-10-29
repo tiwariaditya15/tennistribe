@@ -53,7 +53,7 @@ export function Comment({ comment }: CommentProps): JSX.Element {
     <Flex
       flexDirection={"column"}
       borderBottom={"1px"}
-      borderColor={"gray.700"}
+      borderColor={"gray.200"}
     >
       <Flex px={"0.5rem"} py={"0.4rem"} color={"gray.600"}>
         <Text color={"gray.400"}>{comment.author.name}</Text>

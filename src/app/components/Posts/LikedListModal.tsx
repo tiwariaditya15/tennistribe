@@ -30,8 +30,8 @@ export function LikedListModal({
       }}
     >
       <ModalOverlay />
-      <ModalContent bgColor={"gray.900"}>
-        <ModalHeader textTransform={"capitalize"} color={"gray.400"}>
+      <ModalContent>
+        <ModalHeader textTransform={"capitalize"} color={"gray.600"}>
           Liked By
         </ModalHeader>
         <ModalBody>{children}</ModalBody>

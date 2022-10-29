@@ -24,11 +24,10 @@ export function Navbar(): JSX.Element {
       justify={"space-between"}
       align={"center"}
       color={"twitter.400"}
-      bgColor={"black"}
       fontSize={"1.6rem"}
       p={"1rem"}
       borderBottom="1px"
-      borderColor={"gray.700"}
+      borderColor={"gray.200"}
     >
       <Text fontWeight={"600"}>
         <NavLink to="/">

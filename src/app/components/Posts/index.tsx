@@ -44,7 +44,7 @@ export function Posts({ posts }: PostsProps): JSX.Element {
         templateColumns={"repeat(2, 1fr)"}
         color={"gray.500"}
         borderBottom={"1px"}
-        borderColor={"gray.700"}
+        borderColor={"gray.200"}
       >
         <GridItem mx={"auto"}>
           <Button
