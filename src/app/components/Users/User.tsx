@@ -5,7 +5,6 @@ import {
   GridItem,
   Button,
   Spinner,
-  Text,
   Flex,
   Avatar,
   useToast,
@@ -15,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useState } from "react";
 import { addFollower, removeFollower } from "../../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { getToastProps } from "../../utilities";
 
 type UserProps = {
   user: Partial<UserType>;
@@ -39,12 +39,7 @@ export function User({ user }: UserProps): JSX.Element {
       if (following?.some((entry) => entry.username === user.username)) {
         await unfollow(user.username as string).unwrap();
         dispatch(removeFollower({ username: user.username as string }));
-        toast({
-          description: "Unfollowed!",
-          isClosable: true,
-          status: "info",
-          position: "bottom-right",
-        });
+        toast(getToastProps({ description: "Unfollowed!", status: "info" }));
       } else {
         await follow(user.username as string).unwrap();
         dispatch(
@@ -54,22 +49,23 @@ export function User({ user }: UserProps): JSX.Element {
             email: user.email as string,
           })
         );
-        toast({
-          description: "Followed!",
-          isClosable: true,
-          status: "success",
-          position: "bottom-right",
-        });
+        toast(getToastProps({ description: "Followed!", status: "success" }));
       }
     } catch (error) {
-      console.log({ error });
+      // console.log({ error });
+      toast(
+        getToastProps({
+          description: "Couldn't complete action!",
+          status: "error",
+        })
+      );
     }
   };
   const loggedUserFollows = following?.some(
     (entry) => entry.username === user.username
   );
   return (
-    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.900" }}>
+    <Grid templateColumns={"repeat(3, 1fr)"} _hover={{ bgColor: "gray.100" }}>
       <GridItem
         colSpan={2}
         onClick={() => navigate(`/profile/${user.username}`)}

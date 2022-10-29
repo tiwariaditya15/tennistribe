@@ -16,6 +16,7 @@ import {
 import { BsThreeDots } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
 import { useRemovePostMutation } from "../../services/posts";
+import { getToastProps } from "../../utilities";
 type PostMenuProps = {
   postId: string;
 };
@@ -27,12 +28,12 @@ export function PostMenu({ postId }: PostMenuProps): JSX.Element {
   const handleRemovePost = async () => {
     try {
       await removePost(postId).unwrap();
-      toast({
-        description: "Deleted post!",
-        position: "bottom-right",
-        isClosable: true,
-        status: "info",
-      });
+      toast(
+        getToastProps({
+          description: "Deleted post!",
+          status: "info",
+        })
+      );
       navigate("/");
     } catch (error: any) {}
   };
