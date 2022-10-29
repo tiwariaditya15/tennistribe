@@ -21,6 +21,13 @@ import {
 } from "../../app/components/icons";
 import { removeAllPosts } from "../posts/postsSlice";
 
+type NavigationConfig = {
+  title: string;
+  path: string;
+  isProtected: boolean;
+  icon: () => JSX.Element;
+}[];
+
 export function SideNav(): JSX.Element {
   const [isSmallerThan748] = useMediaQuery("(max-width: 748px)");
   const location = useLocation();
@@ -28,6 +35,34 @@ export function SideNav(): JSX.Element {
   const navigate = useNavigate();
   const logged = useAppSelector((state) => state.auth.logged);
   const currentUser = useAppSelector((state) => state.auth.currentUser);
+
+  const navigationConfig: NavigationConfig = [
+    {
+      title: "Home",
+      icon: () => <IconoirHome />,
+      path: "/",
+      isProtected: false,
+    },
+    {
+      title: "Explore",
+      icon: () => <IcOutlineExplore />,
+      path: "/explore",
+      isProtected: false,
+    },
+    {
+      title: "Bookmarks",
+      icon: () => <MaterialSymbolsBookmarkOutline />,
+      path: "/bookmarks",
+      isProtected: true,
+    },
+    {
+      title: "Profile",
+      icon: () => <IconoirProfileCircled />,
+      path: currentUser ? `/profile/${currentUser.username}` : "/",
+      isProtected: true,
+    },
+  ];
+
   const logoutPopover = (
     <Popover>
       <PopoverTrigger>
@@ -62,93 +97,35 @@ export function SideNav(): JSX.Element {
     <Flex
       flexDirection={"column"}
       h={"100%"}
-      color={"gray.400"}
+      color={"gray.500"}
       alignItems={"flex-start"}
     >
-      <Box
-        py={"1.2rem"}
-        cursor={"pointer"}
-        fontWeight={"medium"}
-        fontSize={"1.2rem"}
-        onClick={() => navigate("/")}
-      >
-        <Flex
-          align={"center"}
-          gridGap={1}
-          color={location.pathname === "/" ? "blue.300" : "inherit"}
-          _hover={{ color: "blue.300" }}
+      {navigationConfig.map(({ title, path, icon, isProtected }, idx) => (
+        <Box
+          py={"1.2rem"}
+          cursor={"pointer"}
+          fontWeight={"medium"}
+          fontSize={"1.2rem"}
+          onClick={() => {
+            if (isProtected) {
+              currentUser ? navigate(path) : navigate("/");
+              return;
+            }
+            navigate(path);
+          }}
+          key={idx}
         >
-          <IconoirHome />
-          {!isSmallerThan748 ? <Text>Home</Text> : null}
-        </Flex>
-      </Box>
-      <Box
-        py={"1.2rem"}
-        cursor={"pointer"}
-        fontWeight={"medium"}
-        fontSize={"1.2rem"}
-        onClick={() => {
-          navigate("/explore");
-        }}
-      >
-        <Flex
-          align={"center"}
-          gridGap={1}
-          color={location.pathname.includes("explore") ? "blue.300" : "inherit"}
-          _hover={{ color: "blue.300" }}
-        >
-          <IcOutlineExplore />
-          {!isSmallerThan748 ? <Text>Explore</Text> : null}
-        </Flex>
-      </Box>
-      <Box
-        py={"1.2rem"}
-        cursor={"pointer"}
-        fontWeight={"medium"}
-        fontSize={"1.2rem"}
-        onClick={() => {
-          if (currentUser) {
-            navigate(`/bookmarks`);
-          } else {
-            navigate("/");
-          }
-        }}
-      >
-        <Flex
-          align={"center"}
-          gridGap={1}
-          color={
-            location.pathname.includes("bookmarks") ? "blue.300" : "inherit"
-          }
-          _hover={{ color: "blue.300" }}
-        >
-          <MaterialSymbolsBookmarkOutline />
-          {!isSmallerThan748 ? <Text>Bookmarks</Text> : null}
-        </Flex>
-      </Box>
-      <Box
-        py={"1.2rem"}
-        cursor={"pointer"}
-        fontWeight={"medium"}
-        fontSize={"1.2rem"}
-        onClick={() => {
-          if (currentUser) {
-            navigate(`/profile/${currentUser?.username}`);
-          } else {
-            navigate("/");
-          }
-        }}
-      >
-        <Flex
-          align={"center"}
-          gridGap={1}
-          color={location.pathname.includes("profile") ? "blue.300" : "inherit"}
-          _hover={{ color: "blue.300" }}
-        >
-          <IconoirProfileCircled />
-          {!isSmallerThan748 ? <Text>Profile</Text> : null}
-        </Flex>
-      </Box>
+          <Flex
+            align={"center"}
+            gridGap={1}
+            color={location.pathname === path ? "blue.300" : "inherit"}
+            _hover={{ color: "blue.300" }}
+          >
+            {icon()}
+            {!isSmallerThan748 ? <Text>{title}</Text> : null}
+          </Flex>
+        </Box>
+      ))}
       <Box py={"1.2rem"}>
         {logged ? (
           <>{logoutPopover}</>
