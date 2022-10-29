@@ -17,7 +17,7 @@ export function Posts({ posts }: PostsProps): JSX.Element {
 
   if (!posts)
     return (
-      <Flex justify={"center"} mt={"1rem"} color={"gray.400"}>
+      <Flex justify={"center"} mt={"1rem"} color={"gray.600"}>
         {logged ? (
           <Text>No posts!</Text>
         ) : (
