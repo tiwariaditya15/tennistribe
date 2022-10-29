@@ -26,7 +26,6 @@ const initialValues: InitialValues = {
 };
 
 export function SignIn(): JSX.Element {
-  const btnRef = useRef(null);
   const [hidden, setHidden] = useState<boolean>(true);
 
   const width = useBreakpointValue({ base: "95%", md: "95%", lg: "95%" });
@@ -132,9 +131,6 @@ export function SignIn(): JSX.Element {
           Fill Credentials
         </Button>
       </Box>
-      <Box mt="0.5rem">
-        <Text color="red.400">{authError && authError}</Text>
-      </Box>
       <Box mt="0.8rem">
         <Text color="twitter.400">
           <span style={{ color: "var(--gray-500)" }}>
@@ -143,6 +139,9 @@ export function SignIn(): JSX.Element {
           &nbsp;&nbsp;
           <NavLink to="/signup">SignUp</NavLink>
         </Text>
+      </Box>
+      <Box mt="0.5rem">
+        <Text color="red.400">{authError && authError}</Text>
       </Box>
     </Flex>
   );
