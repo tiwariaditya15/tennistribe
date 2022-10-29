@@ -23,7 +23,7 @@ import { removeAllPosts } from "../posts/postsSlice";
 
 type NavigationConfig = {
   title: string;
-  path: string;
+  path: string | null;
   isProtected: boolean;
   icon: () => JSX.Element;
 }[];
@@ -58,7 +58,7 @@ export function SideNav(): JSX.Element {
     {
       title: "Profile",
       icon: () => <IconoirProfileCircled />,
-      path: currentUser ? `/profile/${currentUser.username}` : "/",
+      path: currentUser ? `/profile/${currentUser.username}` : null,
       isProtected: true,
     },
   ];
@@ -108,10 +108,10 @@ export function SideNav(): JSX.Element {
           fontSize={"1.2rem"}
           onClick={() => {
             if (isProtected) {
-              currentUser ? navigate(path) : navigate("/");
+              currentUser ? navigate(path ? path : "/") : navigate("/");
               return;
             }
-            navigate(path);
+            navigate(path ? path : "/");
           }}
           key={idx}
         >
