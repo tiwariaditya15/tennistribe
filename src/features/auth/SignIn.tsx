@@ -44,7 +44,7 @@ export function SignIn(): JSX.Element {
     onSubmit: async (values) => {
       try {
         const response = await login(values).unwrap();
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("tennistribe_token", response.token);
       } catch (error: any) {
         dispatch(setError(error.data.error));
       }

@@ -3,8 +3,10 @@ import { authApi, JWTError } from "../../app/services/auth";
 import { AuthState } from "./authSlice.types";
 
 const initialState: AuthState = {
-  logged: localStorage.getItem("token") ? true : false,
-  token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
+  logged: localStorage.getItem("tennistribe_token") ? true : false,
+  token: localStorage.getItem("tennistribe_token")
+    ? localStorage.getItem("tennistribe_token")
+    : null,
   currentUser: null,
   error: null,
 };
@@ -20,7 +22,7 @@ const authSlice = createSlice({
     logout(state) {
       state.logged = false;
       state.token = null;
-      localStorage.removeItem("token");
+      localStorage.removeItem("tennistribe_token");
     },
     setError(state, action: PayloadAction<string>) {
       state.error = action.payload;
@@ -83,7 +85,7 @@ const authSlice = createSlice({
           state.token = null;
           state.error = "Token expired.";
           state.currentUser = null;
-          localStorage.removeItem("token");
+          localStorage.removeItem("tennistribe_token");
         }
       }
     );

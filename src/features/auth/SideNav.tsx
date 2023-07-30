@@ -18,8 +18,10 @@ import {
   IconoirProfileCircled,
   IcOutlineExplore,
   MaterialSymbolsBookmarkOutline,
+  MdiLogin,
 } from "../../app/components/icons";
 import { removeAllPosts } from "../posts/postsSlice";
+import { Link } from "react-router-dom";
 
 type NavigationConfig = {
   title: string;
@@ -126,17 +128,14 @@ export function SideNav(): JSX.Element {
           </Flex>
         </Box>
       ))}
+
       <Box py={"1.2rem"}>
         {logged ? (
           <>{logoutPopover}</>
         ) : (
-          <Button
-            colorScheme={"twitter"}
-            borderRadius={"4rem"}
-            onClick={() => navigate("/signin")}
-          >
-            SignIn
-          </Button>
+          <Link to="/signin">
+            <MdiLogin />
+          </Link>
         )}
       </Box>
     </Flex>
